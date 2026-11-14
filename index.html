@@ -115,6 +115,10 @@ blockquote p{color:var(--yellow);font-size:19px;line-height:1.5;margin:0}
 .proj .k{font:600 11px/1 var(--font-sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .proj h3{margin:8px 0 6px}
 .proj p{font-size:15px;line-height:1.6;margin:0}
+.proj.chal{display:block;text-decoration:none;grid-column:1/-1;margin-bottom:8px;padding:22px 24px;border:1px solid color-mix(in srgb,var(--yellow) 45%,var(--line));border-radius:16px;background:linear-gradient(180deg,rgba(242,183,5,.08),rgba(242,183,5,0) 70%),var(--surface);transition:transform .15s,box-shadow .2s}
+.proj.chal:hover{transform:translateY(-2px);box-shadow:0 0 28px rgba(242,183,5,.18)}
+.proj.chal .k{color:var(--yellow)}
+.proj.chal p{color:var(--yellow-soft)}
 
 /* ---------- publications ---------- */
 .pubs{list-style:none;margin:0;padding:0;counter-reset:pub}
@@ -304,6 +308,7 @@ footer a{color:var(--muted)}
     <h2>Three questions, one dissertation.</h2>
     <p class="muted">Where contrarian strategies come from, what they are, and how they are judged.</p>
     <div class="grid2">
+      <a class="proj chal" href="/challenge/"><span class="k">Challenge</span><h3>Strategy Formulation Challenge →</h3><p>Introduction, latest updates, results and registration for the challenge.</p></a>
       <div class="proj"><span class="k">Formulation</span><h3>Thinking against the grain</h3><p>Think-aloud protocols from 80 sessions trace how people arrive at consensus-following or consensus-challenging strategies.</p></div>
       <div class="proj"><span class="k">Theory</span><h3>When contrarian strategy attracts capital</h3><p>A minimal formal model of contrarianism, distance and audience-contingent value.</p></div>
       <div class="proj"><span class="k">Evaluation</span><h3>Disagreeing with the market</h3><p>How investor disagreement shapes funding for ventures that contradict market consensus.</p></div>
