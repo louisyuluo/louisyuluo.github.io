@@ -170,6 +170,9 @@ blockquote p{color:var(--yellow);font-size:19px;line-height:1.5;margin:0}
 .vmeta b{color:var(--yellow);font-weight:600;font-size:15px;line-height:1.4}
 .vmeta .when{font:400 12px/1 var(--font-mono);color:var(--muted)}
 .subh{margin:48px 0 14px;font-size:20px}
+.vid .role{position:absolute;right:10px;top:10px;font:600 11px/1 var(--font-sans);letter-spacing:.06em;text-transform:uppercase;padding:6px 9px;border-radius:999px;background:rgba(0,0,0,.72);color:var(--yellow);border:1px solid rgba(255,212,0,.35)}
+.vid.feat .role{background:var(--yellow);color:#000;border-color:var(--yellow)}
+.vid.feat{border-color:color-mix(in srgb,var(--yellow) 45%,var(--line))}
 
 /* ---------- cv ---------- */
 .cvhead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}
@@ -360,83 +363,107 @@ footer a{color:var(--muted)}
   <div class="wrap">
     <p class="eyebrow">Media &amp; talks</p>
     <h2>On screen, and on stage.</h2>
-    <p>Before my PhD I worked as a business correspondent and presenter in Beijing. These are my on-air reports for CCTV News and CGTN, the English-language international channel of China Central Television, from 2016 to 2017.</p>
-    <div class="vstats"><span><b>18</b> reports</span><span><b>3</b> CGTN channels</span><span><b>2016–17</b> Beijing desk</span></div>
-    <div class="vfilters" role="group" aria-label="Filter reports by topic">
-      <button type="button" class="on" data-f="all">All</button><button type="button" data-f="Economy">Economy</button><button type="button" data-f="Policy">Policy</button><button type="button" data-f="Society">Society</button><button type="button" data-f="Science">Science</button>
+    <p>Before my PhD I worked as a business correspondent and presenter in Beijing. These are my reports, interviews and presenting work for CCTV News and CGTN, the English-language international channel of China Central Television, from 2016 to 2017. Interviews and presenting come first, then field reports from across China, then newsroom reports.</p>
+    <div class="vstats"><span><b>24</b> reports</span><span><b>4</b> interviews &amp; presenting</span><span><b>12</b> field reports</span><span><b>2016–17</b> Beijing desk</span></div>
+    <div class="vfilters" role="group" aria-label="Filter reports">
+      <button type="button" class="on" data-f="all">All</button><button type="button" data-f="oncam">On camera</button><button type="button" data-f="field">Field reports</button><button type="button" data-f="Economy">Economy</button><button type="button" data-f="Policy">Policy</button><button type="button" data-f="Society">Society</button><button type="button" data-f="Science">Science</button>
     </div>
     <div class="vgrid" id="vgrid">
-      <a class="vid" data-tag="Society" href="https://news.cgtn.com/news/7741444e79597a6333566d54/index.html" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://video.cgtn.com/news/7741444e79597a6333566d54/video/47bbccaa-5ac8-4e92-8f11-f872c9e6f75b/47bbccaa-5ac8-4e92-8f11-f872c9e6f75b.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="vmeta"><span class="k">CGTN.com · Society</span><b>Delegate Yang Xiaoling: I want kids with special needs to shine on stage</b><span class="when">Oct 2017 · with Li Jian</span></span>
-      </a>
-      <a class="vid" data-tag="Economy" href="https://www.youtube.com/watch?v=Wyf-fsEQiM8" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/Wyf-fsEQiM8/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="vmeta"><span class="k">CGTN America · Economy</span><b>Local government debt on agenda for 19th CPC National Congress</b><span class="when">Oct 2017</span></span>
-      </a>
-      <a class="vid" data-tag="Economy" href="https://www.youtube.com/watch?v=JTsNvH9oDx4" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/JTsNvH9oDx4/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="vmeta"><span class="k">CGTN America · Economy</span><b>Fossil fuel phase-out focus of China’s 18th Wuhan Motor Show</b><span class="when">Oct 2017</span></span>
-      </a>
-      <a class="vid" data-tag="Society" href="https://www.youtube.com/watch?v=r793K5b9tiE" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/r793K5b9tiE/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="vmeta"><span class="k">CGTN · Society</span><b>Chinese culture in Summer Davos</b><span class="when">Jun 2017</span></span>
-      </a>
-      <a class="vid" data-tag="Economy" href="https://www.youtube.com/watch?v=zsMRsnXBvKA" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/zsMRsnXBvKA/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+      <a class="vid feat" data-tag="Economy" data-role="oncam" href="https://www.youtube.com/watch?v=zsMRsnXBvKA" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/zsMRsnXBvKA/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Presenter</span><span class="play" aria-hidden="true"></span></span>
         <span class="vmeta"><span class="k">CGTN · Economy</span><b>Ask China: What is a good project for Silk Road Fund?</b><span class="when">May 2017</span></span>
       </a>
-      <a class="vid" data-tag="Economy" href="https://www.youtube.com/watch?v=iK3gA2e-96I" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/iK3gA2e-96I/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="vmeta"><span class="k">CGTN Africa · Economy</span><b>China’s first-quarter rebound bolsters world economic outlook</b><span class="when">Apr 2017</span></span>
-      </a>
-      <a class="vid" data-tag="Society" href="https://www.youtube.com/watch?v=db5cI4e7ZlM" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/db5cI4e7ZlM/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+      <a class="vid feat" data-tag="Society" data-role="oncam" href="https://www.youtube.com/watch?v=db5cI4e7ZlM" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/db5cI4e7ZlM/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Interview</span><span class="play" aria-hidden="true"></span></span>
         <span class="vmeta"><span class="k">CGTN · Society</span><b>Exclusive with Li Bingbing: The biggest change is people’s minds in Earth Hour</b><span class="when">Mar 2017</span></span>
       </a>
-      <a class="vid" data-tag="Society" href="https://www.youtube.com/watch?v=dhdys4gET1s" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/dhdys4gET1s/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="vmeta"><span class="k">CGTN Africa · Society</span><b>Spring Festival: Celebrations being held across China</b><span class="when">Jan 2017</span></span>
-      </a>
-      <a class="vid" data-tag="Society" href="https://www.youtube.com/watch?v=SZF5O0hyuFs" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/SZF5O0hyuFs/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="vmeta"><span class="k">CGTN Africa · Society</span><b>New Year celebrations to be broadcast live from five locations</b><span class="when">Jan 2017</span></span>
-      </a>
-      <a class="vid" data-tag="Policy" href="https://www.youtube.com/watch?v=p682oxelI-M" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/p682oxelI-M/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="vmeta"><span class="k">CGTN Africa · Policy</span><b>President Xi calls for inclusive globalization</b><span class="when">Jan 2017</span></span>
-      </a>
-      <a class="vid" data-tag="Economy" href="https://www.youtube.com/watch?v=MxoCeRrtmcA" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/MxoCeRrtmcA/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="vmeta"><span class="k">CGTN · Economy</span><b>Mobile task service becomes popular on Beijing campuses</b><span class="when">Dec 2016</span></span>
-      </a>
-      <a class="vid" data-tag="Economy" href="https://www.youtube.com/watch?v=XuzEhMfg7fg" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/XuzEhMfg7fg/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="vmeta"><span class="k">CGTN · Economy</span><b>Indian banks start dispensing new 500 rupee bills</b><span class="when">Nov 2016</span></span>
-      </a>
-      <a class="vid" data-tag="Policy" href="https://www.youtube.com/watch?v=3LTNcZfVKhQ" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/3LTNcZfVKhQ/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="vmeta"><span class="k">CGTN America · Policy</span><b>CPC leaders gather to honor legacy of fighters of the Long March</b><span class="when">Oct 2016</span></span>
-      </a>
-      <a class="vid" data-tag="Science" href="https://www.youtube.com/watch?v=AiITZE4Ye7U" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/AiITZE4Ye7U/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="vmeta"><span class="k">CGTN · Science</span><b>Two astronauts to stay in Tiangong-2 for 33 days</b><span class="when">Oct 2016</span></span>
-      </a>
-      <a class="vid" data-tag="Science" href="https://www.youtube.com/watch?v=Eb1HF-3Xojg" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/Eb1HF-3Xojg/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="vmeta"><span class="k">CGTN · Science</span><b>China’s Tiangong-2 will host two astronauts in space</b><span class="when">Sep 2016</span></span>
-      </a>
-      <a class="vid" data-tag="Economy" href="https://www.youtube.com/watch?v=urBpyAKo1mo" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/urBpyAKo1mo/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="vmeta"><span class="k">CGTN · Economy</span><b>China-ASEAN Expo: Promises of more trade, investment and business</b><span class="when">Sep 2016</span></span>
-      </a>
-      <a class="vid" data-tag="Policy" href="https://www.youtube.com/watch?v=M9h6CylVX2w" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/M9h6CylVX2w/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+      <a class="vid feat" data-tag="Policy" data-role="oncam" href="https://www.youtube.com/watch?v=M9h6CylVX2w" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/M9h6CylVX2w/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Interview</span><span class="play" aria-hidden="true"></span></span>
         <span class="vmeta"><span class="k">CGTN Africa · Policy</span><b>WTO director-general on expectations of G20 Summit</b><span class="when">Sep 2016</span></span>
       </a>
-      <a class="vid" data-tag="Policy" href="https://www.youtube.com/watch?v=RAErBOccBoA" target="_blank" rel="noopener">
-        <span class="thumb"><img src="https://i.ytimg.com/vi/RAErBOccBoA/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
-        <span class="vmeta"><span class="k">CGTN Africa · Policy</span><b>UN praises China’s sustainable development policies</b><span class="when">Aug 2016</span></span>
+      <a class="vid feat" data-tag="Policy" data-role="oncam" href="https://www.youtube.com/watch?v=RAErBOccBoA" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/RAErBOccBoA/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Interview</span><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN Africa · Policy</span><b>UN praises China’s sustainable development policies, with Ban Ki-moon</b><span class="when">Aug 2016</span></span>
+      </a>
+      <a class="vid" data-tag="Society" data-role="field" href="https://news.cgtn.com/news/7741444e79597a6333566d54/index.html" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://video.cgtn.com/news/7741444e79597a6333566d54/video/47bbccaa-5ac8-4e92-8f11-f872c9e6f75b/47bbccaa-5ac8-4e92-8f11-f872c9e6f75b.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Field report</span><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN.com · Society</span><b>Delegate Yang Xiaoling: I want kids with special needs to shine on stage</b><span class="when">Oct 2017 · with Li Jian</span></span>
+      </a>
+      <a class="vid" data-tag="Economy" data-role="field" href="https://www.youtube.com/watch?v=Wyf-fsEQiM8" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/Wyf-fsEQiM8/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Field report</span><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN America · Economy</span><b>Local government debt on agenda for 19th CPC National Congress</b><span class="when">Oct 2017</span></span>
+      </a>
+      <a class="vid" data-tag="Economy" data-role="field" href="https://www.youtube.com/watch?v=JTsNvH9oDx4" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/JTsNvH9oDx4/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Field report</span><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN America · Economy</span><b>Fossil fuel phase-out focus of China’s 18th Wuhan Motor Show</b><span class="when">Oct 2017</span></span>
+      </a>
+      <a class="vid" data-tag="Science" data-role="field" href="https://news.cgtn.com/news/796b7a4d35557a6333566d54/index.html" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://video.cgtn.com/news/796b7a4d35557a6333566d54/video/95d6d0e7-9f73-4ae0-a4b5-32a0e8a2b9e0/95d6d0e7-9f73-4ae0-a4b5-32a0e8a2b9e0.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Field report</span><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN.com · Science</span><b>4th World Nobel Prize laureate summit highlights TCM modernization</b><span class="when">Sep 2017 · with Li Jian, Zhang Kai</span></span>
+      </a>
+      <a class="vid" data-tag="Science" data-role="field" href="https://news.cgtn.com/news/35677a4d35557a6333566d54/index.html" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://video.cgtn.com/news/35677a4d35557a6333566d54/video/a6fef164-daf3-4091-a355-ab614d821f0a/a6fef164-daf3-4091-a355-ab614d821f0a.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Field report</span><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN.com · Science</span><b>Combined treatment of TCM and modern medicine effective in treating liver cirrhosis</b><span class="when">Sep 2017 · with Li Jian</span></span>
+      </a>
+      <a class="vid" data-tag="Science" data-role="field" href="https://news.cgtn.com/news/3d59544d35454464776c6d636a4e6e62684a4856/share_p.html" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://news.cgtn.com/publish/2017-09-16/video/16dfeb9b-5741-4b6d-8a67-d052aac8d160/16dfeb9b-5741-4b6d-8a67-d052aac8d160.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Field report</span><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN.com · Science</span><b>Traditional Chinese Medicine: Modern medical scientists working with TCM</b><span class="when">Sep 2017 · Zhengzhou</span></span>
+      </a>
+      <a class="vid" data-tag="Economy" data-role="field" href="https://news.cgtn.com/news/31497a4d31517a6333566d54/index.html" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://video.cgtn.com/news/3d556a4d7a55444e/video/b700ecc1-7f07-429e-b412-ad715057e17a/b700ecc1-7f07-429e-b412-ad715057e17a.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Field report</span><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN.com · Economy</span><b>Dalian leads smart manufacturing in NE China</b><span class="when">Jun 2017 · Dalian</span></span>
+      </a>
+      <a class="vid" data-tag="Society" data-role="field" href="https://www.youtube.com/watch?v=r793K5b9tiE" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/r793K5b9tiE/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Field report</span><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN · Society</span><b>Chinese culture in Summer Davos</b><span class="when">Jun 2017 · Dalian</span></span>
+      </a>
+      <a class="vid" data-tag="Economy" data-role="field" href="https://news.cgtn.com/news/78457a4e30517a6333566d54/index.html" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://video.cgtn.com/news/3d45544d3351444e/video/7c44a455-2f4a-4c43-92d0-6f0821a5c3d9/7c44a455-2f4a-4c43-92d0-6f0821a5c3d9.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Field report</span><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN.com · Economy</span><b>What has Summer Davos brought to Dalian?</b><span class="when">Jun 2017 · Dalian</span></span>
+      </a>
+      <a class="vid" data-tag="Society" data-role="field" href="https://news.cgtn.com/news/3d457a4e3549444e/index.html" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://video.cgtn.com/news/3d457a4e3549444e/video/310d5cf6-2c5d-4b85-aea2-c7a7b940e5d9/310d5cf6-2c5d-4b85-aea2-c7a7b940e5d9.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Field report</span><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN.com · Society</span><b>Don’t wait until disaster strikes. Please give often!</b><span class="when">Jun 2017 · Beijing</span></span>
+      </a>
+      <a class="vid" data-tag="Society" data-role="field" href="https://www.youtube.com/watch?v=SZF5O0hyuFs" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/SZF5O0hyuFs/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Field report</span><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN Africa · Society</span><b>New Year celebrations to be broadcast live from five locations</b><span class="when">Jan 2017</span></span>
+      </a>
+      <a class="vid" data-tag="Economy" data-role="field" href="https://www.youtube.com/watch?v=MxoCeRrtmcA" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/MxoCeRrtmcA/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Field report</span><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN · Economy</span><b>Mobile task service becomes popular on Beijing campuses</b><span class="when">Dec 2016</span></span>
+      </a>
+      <a class="vid" data-tag="Economy" data-role="desk" href="https://www.youtube.com/watch?v=iK3gA2e-96I" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/iK3gA2e-96I/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Report</span><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN Africa · Economy</span><b>China’s first-quarter rebound bolsters world economic outlook</b><span class="when">Apr 2017</span></span>
+      </a>
+      <a class="vid" data-tag="Society" data-role="desk" href="https://www.youtube.com/watch?v=dhdys4gET1s" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/dhdys4gET1s/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Report</span><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN Africa · Society</span><b>Spring Festival: Celebrations being held across China</b><span class="when">Jan 2017</span></span>
+      </a>
+      <a class="vid" data-tag="Policy" data-role="desk" href="https://www.youtube.com/watch?v=p682oxelI-M" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/p682oxelI-M/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Report</span><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN Africa · Policy</span><b>President Xi calls for inclusive globalization</b><span class="when">Jan 2017</span></span>
+      </a>
+      <a class="vid" data-tag="Economy" data-role="desk" href="https://www.youtube.com/watch?v=XuzEhMfg7fg" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/XuzEhMfg7fg/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Report</span><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN · Economy</span><b>Indian banks start dispensing new 500 rupee bills</b><span class="when">Nov 2016</span></span>
+      </a>
+      <a class="vid" data-tag="Policy" data-role="desk" href="https://www.youtube.com/watch?v=3LTNcZfVKhQ" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/3LTNcZfVKhQ/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Report</span><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN America · Policy</span><b>CPC leaders gather to honor legacy of fighters of the Long March</b><span class="when">Oct 2016</span></span>
+      </a>
+      <a class="vid" data-tag="Science" data-role="desk" href="https://www.youtube.com/watch?v=AiITZE4Ye7U" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/AiITZE4Ye7U/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Report</span><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN · Science</span><b>Two astronauts to stay in Tiangong-2 for 33 days</b><span class="when">Oct 2016</span></span>
+      </a>
+      <a class="vid" data-tag="Science" data-role="desk" href="https://www.youtube.com/watch?v=Eb1HF-3Xojg" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/Eb1HF-3Xojg/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Report</span><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN · Science</span><b>China’s Tiangong-2 will host two astronauts in space</b><span class="when">Sep 2016</span></span>
+      </a>
+      <a class="vid" data-tag="Economy" data-role="desk" href="https://www.youtube.com/watch?v=urBpyAKo1mo" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/urBpyAKo1mo/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Report</span><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN · Economy</span><b>China-ASEAN Expo: Promises of more trade, investment and business</b><span class="when">Sep 2016</span></span>
       </a>
     </div>
 
@@ -563,7 +590,7 @@ footer a{color:var(--muted)}
 
   /* media filters */
   const fb=[...document.querySelectorAll('.vfilters button')], vids=[...document.querySelectorAll('#vgrid .vid')];
-  fb.forEach(b=>b.addEventListener('click',()=>{ fb.forEach(x=>x.classList.toggle('on',x===b)); const f=b.dataset.f; vids.forEach(v=>v.hidden=!(f==='all'||v.dataset.tag===f)); }));
+  fb.forEach(b=>b.addEventListener('click',()=>{ fb.forEach(x=>x.classList.toggle('on',x===b)); const f=b.dataset.f; vids.forEach(v=>v.hidden=!(f==='all'||v.dataset.tag===f||v.dataset.role===f)); }));
 
   /* active pill in nav */
   const links = [...document.querySelectorAll('nav.pills a')];
