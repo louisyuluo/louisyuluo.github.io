@@ -149,6 +149,28 @@ blockquote p{color:var(--yellow);font-size:19px;line-height:1.5;margin:0}
 .card p{font-size:14px;margin:0;color:var(--muted)}
 .card .when{margin-top:auto;font:400 12px/1 var(--font-mono);color:var(--muted)}
 
+/* ---------- media: video reports ---------- */
+.vstats{display:flex;flex-wrap:wrap;gap:8px 22px;margin:6px 0 20px;font:400 14px/1.4 var(--font-mono);color:var(--muted)}
+.vstats b{color:var(--yellow);font-weight:500}
+.vfilters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.vfilters button{font:500 13px/1 var(--font-sans);padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--yellow-soft);cursor:pointer}
+.vfilters button:hover{border-color:var(--yellow)}
+.vfilters button.on{background:var(--yellow);color:#000;border-color:var(--yellow)}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.vid{display:flex;flex-direction:column;text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:border-color .2s,transform .2s}
+.vid:hover{border-color:var(--yellow);transform:translateY(-2px)}
+.vid[hidden]{display:none}
+.thumb{position:relative;aspect-ratio:16/9;background:linear-gradient(135deg,#1a1606,#000);display:block;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.85);transition:transform .3s}
+.vid:hover .thumb img{transform:scale(1.04)}
+.play{position:absolute;left:12px;bottom:12px;width:36px;height:36px;border-radius:50%;background:var(--yellow);box-shadow:0 4px 18px rgba(0,0,0,.5)}
+.play::after{content:"";position:absolute;left:14px;top:11px;border-left:11px solid #000;border-top:7px solid transparent;border-bottom:7px solid transparent}
+.vmeta{display:flex;flex-direction:column;gap:6px;padding:14px 16px 16px}
+.vmeta .k{font:600 11px/1.3 var(--font-sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.vmeta b{color:var(--yellow);font-weight:600;font-size:15px;line-height:1.4}
+.vmeta .when{font:400 12px/1 var(--font-mono);color:var(--muted)}
+.subh{margin:48px 0 14px;font-size:20px}
+
 /* ---------- cv ---------- */
 .cvhead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}
 .cvhead h2{margin:0}
@@ -337,12 +359,92 @@ footer a{color:var(--muted)}
 <section id="media">
   <div class="wrap">
     <p class="eyebrow">Media &amp; talks</p>
-    <h2>Lately, out loud.</h2>
-    <div class="cards">
-      <article class="card"><span class="k">Talk</span><h3><span class="todo">Conference presentation</span></h3><p>e.g. AOM, SMS, or a departmental seminar.</p><span class="when">Date · City</span></article>
-      <article class="card"><span class="k">Interview</span><h3><span class="todo">Podcast or press feature</span></h3><p>Add a link and one line on the topic.</p><span class="when">Date · Outlet</span></article>
-      <article class="card"><span class="k">Panel</span><h3><span class="todo">Panel or workshop</span></h3><p>AI in management research, strategy, entrepreneurship.</p><span class="when">Date · Venue</span></article>
+    <h2>On screen, and on stage.</h2>
+    <p>Before my PhD I worked as a business correspondent and presenter in Beijing. These are my on-air reports for CCTV News and CGTN, the English-language international channel of China Central Television, from 2016 to 2017.</p>
+    <div class="vstats"><span><b>17</b> reports</span><span><b>3</b> CGTN channels</span><span><b>2016–17</b> Beijing desk</span></div>
+    <div class="vfilters" role="group" aria-label="Filter reports by topic">
+      <button type="button" class="on" data-f="all">All</button><button type="button" data-f="Economy">Economy</button><button type="button" data-f="Policy">Policy</button><button type="button" data-f="Society">Society</button><button type="button" data-f="Science">Science</button>
     </div>
+    <div class="vgrid" id="vgrid">
+      <a class="vid" data-tag="Economy" href="https://www.youtube.com/watch?v=Wyf-fsEQiM8" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/Wyf-fsEQiM8/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN America · Economy</span><b>Local government debt on agenda for 19th CPC National Congress</b><span class="when">Oct 2017</span></span>
+      </a>
+      <a class="vid" data-tag="Economy" href="https://www.youtube.com/watch?v=JTsNvH9oDx4" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/JTsNvH9oDx4/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN America · Economy</span><b>Fossil fuel phase-out focus of China’s 18th Wuhan Motor Show</b><span class="when">Oct 2017</span></span>
+      </a>
+      <a class="vid" data-tag="Society" href="https://www.youtube.com/watch?v=r793K5b9tiE" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/r793K5b9tiE/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN · Society</span><b>Chinese culture in Summer Davos</b><span class="when">Jun 2017</span></span>
+      </a>
+      <a class="vid" data-tag="Economy" href="https://www.youtube.com/watch?v=zsMRsnXBvKA" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/zsMRsnXBvKA/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN · Economy</span><b>Ask China: What is a good project for Silk Road Fund?</b><span class="when">May 2017</span></span>
+      </a>
+      <a class="vid" data-tag="Economy" href="https://www.youtube.com/watch?v=iK3gA2e-96I" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/iK3gA2e-96I/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN Africa · Economy</span><b>China’s first-quarter rebound bolsters world economic outlook</b><span class="when">Apr 2017</span></span>
+      </a>
+      <a class="vid" data-tag="Society" href="https://www.youtube.com/watch?v=db5cI4e7ZlM" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/db5cI4e7ZlM/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN · Society</span><b>Exclusive with Li Bingbing: The biggest change is people’s minds in Earth Hour</b><span class="when">Mar 2017</span></span>
+      </a>
+      <a class="vid" data-tag="Society" href="https://www.youtube.com/watch?v=dhdys4gET1s" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/dhdys4gET1s/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN Africa · Society</span><b>Spring Festival: Celebrations being held across China</b><span class="when">Jan 2017</span></span>
+      </a>
+      <a class="vid" data-tag="Society" href="https://www.youtube.com/watch?v=SZF5O0hyuFs" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/SZF5O0hyuFs/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN Africa · Society</span><b>New Year celebrations to be broadcast live from five locations</b><span class="when">Jan 2017</span></span>
+      </a>
+      <a class="vid" data-tag="Policy" href="https://www.youtube.com/watch?v=p682oxelI-M" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/p682oxelI-M/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN Africa · Policy</span><b>President Xi calls for inclusive globalization</b><span class="when">Jan 2017</span></span>
+      </a>
+      <a class="vid" data-tag="Economy" href="https://www.youtube.com/watch?v=MxoCeRrtmcA" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/MxoCeRrtmcA/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN · Economy</span><b>Mobile task service becomes popular on Beijing campuses</b><span class="when">Dec 2016</span></span>
+      </a>
+      <a class="vid" data-tag="Economy" href="https://www.youtube.com/watch?v=XuzEhMfg7fg" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/XuzEhMfg7fg/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN · Economy</span><b>Indian banks start dispensing new 500 rupee bills</b><span class="when">Nov 2016</span></span>
+      </a>
+      <a class="vid" data-tag="Policy" href="https://www.youtube.com/watch?v=3LTNcZfVKhQ" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/3LTNcZfVKhQ/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN America · Policy</span><b>CPC leaders gather to honor legacy of fighters of the Long March</b><span class="when">Oct 2016</span></span>
+      </a>
+      <a class="vid" data-tag="Science" href="https://www.youtube.com/watch?v=AiITZE4Ye7U" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/AiITZE4Ye7U/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN · Science</span><b>Two astronauts to stay in Tiangong-2 for 33 days</b><span class="when">Oct 2016</span></span>
+      </a>
+      <a class="vid" data-tag="Science" href="https://www.youtube.com/watch?v=Eb1HF-3Xojg" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/Eb1HF-3Xojg/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN · Science</span><b>China’s Tiangong-2 will host two astronauts in space</b><span class="when">Sep 2016</span></span>
+      </a>
+      <a class="vid" data-tag="Economy" href="https://www.youtube.com/watch?v=urBpyAKo1mo" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/urBpyAKo1mo/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN · Economy</span><b>China-ASEAN Expo: Promises of more trade, investment and business</b><span class="when">Sep 2016</span></span>
+      </a>
+      <a class="vid" data-tag="Policy" href="https://www.youtube.com/watch?v=M9h6CylVX2w" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/M9h6CylVX2w/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN Africa · Policy</span><b>WTO director-general on expectations of G20 Summit</b><span class="when">Sep 2016</span></span>
+      </a>
+      <a class="vid" data-tag="Policy" href="https://www.youtube.com/watch?v=RAErBOccBoA" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://i.ytimg.com/vi/RAErBOccBoA/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CGTN Africa · Policy</span><b>UN praises China’s sustainable development policies</b><span class="when">Aug 2016</span></span>
+      </a>
+    </div>
+
+    <h3 class="subh">Conference presentations</h3>
+    <ol class="tl">
+        <li><time>2025</time><div><b>SMS 45th Annual Conference</b><br><span class="muted">San Francisco</span></div></li>
+        <li><time>2025</time><div><b>Academy of Management Annual Meeting</b><br><span class="muted">Copenhagen</span></div></li>
+        <li><time>2025</time><div><b>AMJ Paper Development Workshop</b><br><span class="muted">London</span></div></li>
+        <li><time>2024</time><div><b>People &amp; Organizations Conference</b><br><span class="muted">Wharton</span></div></li>
+        <li><time>2024</time><div><b>London Text Analysis Conference</b><br><span class="muted">London</span></div></li>
+        <li><time>2024</time><div><b>AMJ Paper Development Workshop</b><br><span class="muted">Durham</span></div></li>
+    </ol>
   </div>
 </section>
 
@@ -454,6 +556,10 @@ footer a{color:var(--muted)}
   stage.addEventListener('pointerleave', () => { mouse.x = mouse.y = -1e4; });
   addEventListener('resize', resize);
   resize(); setPaused(paused);
+
+  /* media filters */
+  const fb=[...document.querySelectorAll('.vfilters button')], vids=[...document.querySelectorAll('#vgrid .vid')];
+  fb.forEach(b=>b.addEventListener('click',()=>{ fb.forEach(x=>x.classList.toggle('on',x===b)); const f=b.dataset.f; vids.forEach(v=>v.hidden=!(f==='all'||v.dataset.tag===f)); }));
 
   /* active pill in nav */
   const links = [...document.querySelectorAll('nav.pills a')];
