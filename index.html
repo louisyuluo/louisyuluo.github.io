@@ -178,6 +178,15 @@ blockquote p{color:var(--yellow);font-size:19px;line-height:1.5;margin:0}
 .vid.feat .role{background:var(--yellow);color:#000;border-color:var(--yellow)}
 .vid.feat{border-color:color-mix(in srgb,var(--yellow) 45%,var(--line))}
 
+#player{width:min(880px,94vw);padding:0;border:1px solid var(--line);border-radius:18px;background:var(--surface);color:var(--yellow-soft);box-shadow:0 0 60px rgba(242,183,5,.18)}
+#player::backdrop{background:rgba(0,0,0,.78);backdrop-filter:blur(4px)}
+.pl-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.pl-head b{color:var(--yellow);font-weight:600}
+#pl-close{font:500 13px/1 var(--font-sans);background:var(--surface-2);color:var(--yellow-soft);border:1px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer}
+#pl-close:hover{border-color:var(--yellow);color:var(--yellow)}
+#pl-video{display:block;width:100%;aspect-ratio:16/9;background:#000}
+.pl-note{margin:0;padding:12px 18px;font-size:13px;color:var(--muted)}
+
 /* ---------- cv ---------- */
 .cvhead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}
 .cvhead h2{margin:0}
@@ -376,7 +385,7 @@ footer a{color:var(--muted)}
     <p class="eyebrow">Media &amp; talks</p>
     <h2>On screen, and on stage.</h2>
     <p>Before my PhD I worked as a business correspondent and presenter in Beijing. These are my reports, interviews and presenting work for CCTV News and CGTN, the English-language international channel of China Central Television, from 2016 to 2017. On-camera presenting and interviews come first, then field reports from across China, then voiced interviews and newsroom reports.</p>
-    <div class="vstats"><span><b>25</b> reports</span><span><b>4</b> on camera</span><span><b>13</b> field reports</span><span><b>2016–17</b> Beijing desk</span></div>
+    <div class="vstats"><span><b>26</b> reports</span><span><b>4</b> on camera</span><span><b>14</b> field reports</span><span><b>2016–17</b> Beijing desk</span></div>
     <div class="vfilters" role="group" aria-label="Filter reports">
       <button type="button" class="on" data-f="all">All</button><button type="button" data-f="oncam">On camera</button><button type="button" data-f="field">Field reports</button><button type="button" data-f="Economy">Economy</button><button type="button" data-f="Policy">Policy</button><button type="button" data-f="Society">Society</button><button type="button" data-f="Science">Science</button>
     </div>
@@ -448,6 +457,10 @@ footer a{color:var(--muted)}
       <a class="vid" data-tag="Economy" data-role="field" href="https://www.youtube.com/watch?v=MxoCeRrtmcA" target="_blank" rel="noopener">
         <span class="thumb"><img src="https://i.ytimg.com/vi/MxoCeRrtmcA/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Field report</span><span class="play" aria-hidden="true"></span></span>
         <span class="vmeta"><span class="k">CGTN · Economy</span><b>Mobile task service becomes popular on Beijing campuses</b><span class="when">Dec 2016</span></span>
+      </a>
+      <a class="vid" data-tag="Economy" data-role="field" data-hls="https://dh5.cntv.cdn20.com/asp/h5e/hls/main/0303000a/3/default/9292c3b010ab44ba82458ab15134faa5/main.m3u8?maxbr=2048&amp;contentid=15120519184043" href="https://english.cctv.com/2016/12/03/VIDE4dSKcjNTKixBc5VIRCRH161203.shtml" target="_blank" rel="noopener">
+        <span class="thumb"><img src="https://p3.img.cctvpic.com/fmspic/2016/12/03/9292c3b010ab44ba82458ab15134faa5-111.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Field report</span><span class="play" aria-hidden="true"></span></span>
+        <span class="vmeta"><span class="k">CCTV News · Economy</span><b>NDRC, Alibaba to build credit system for SMEs</b><span class="when">Dec 2016 · plays here</span></span>
       </a>
       <a class="vid" data-tag="Policy" data-role="desk" href="https://www.youtube.com/watch?v=M9h6CylVX2w" target="_blank" rel="noopener">
         <span class="thumb"><img src="https://i.ytimg.com/vi/M9h6CylVX2w/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()"><span class="role">Interview</span><span class="play" aria-hidden="true"></span></span>
@@ -546,6 +559,12 @@ footer a{color:var(--muted)}
 </section>
 </main>
 
+<dialog id="player" aria-label="Video player">
+  <div class="pl-head"><b id="pl-title"></b><button type="button" id="pl-close" aria-label="Close video">Close</button></div>
+  <video id="pl-video" controls playsinline></video>
+  <p class="pl-note">Streamed from CCTV. If it does not play, <a id="pl-src" href="#" target="_blank" rel="noopener">open the original page</a>.</p>
+</dialog>
+
 <footer>
   <div class="wrap">
     <span>© 2026 Louis Yu Luo · <span lang="zh-Hans">罗煜</span></span>
@@ -607,6 +626,26 @@ footer a{color:var(--muted)}
   /* media filters */
   const fb=[...document.querySelectorAll('.vfilters button')], vids=[...document.querySelectorAll('#vgrid .vid')];
   fb.forEach(b=>b.addEventListener('click',()=>{ fb.forEach(x=>x.classList.toggle('on',x===b)); const f=b.dataset.f; vids.forEach(v=>v.hidden=!(f==='all'||v.dataset.tag===f||v.dataset.role===f)); }));
+
+  /* in-site player for archived CCTV videos */
+  const dlg=document.getElementById('player'), pv=document.getElementById('pl-video');
+  let hlsInst=null;
+  function loadHls(){ return window.Hls ? Promise.resolve() : new Promise((ok,no)=>{ const sc=document.createElement('script'); sc.src='https://cdnjs.cloudflare.com/ajax/libs/hls.js/1.5.13/hls.min.js'; sc.onload=ok; sc.onerror=no; document.head.appendChild(sc); }); }
+  document.querySelectorAll('.vid[data-hls]').forEach(card=>card.addEventListener('click',async e=>{
+    if(!dlg || !dlg.showModal) return;
+    e.preventDefault();
+    const url=card.dataset.hls;
+    document.getElementById('pl-title').textContent=card.querySelector('b').textContent;
+    document.getElementById('pl-src').href=card.href;
+    dlg.showModal();
+    if(pv.canPlayType('application/vnd.apple.mpegurl')){ pv.src=url; }
+    else { try{ await loadHls(); if(window.Hls && Hls.isSupported()){ hlsInst=new Hls(); hlsInst.loadSource(url); hlsInst.attachMedia(pv); } else { pv.src=url; } }catch(err){ pv.src=url; } }
+    pv.play().catch(()=>{});
+  }));
+  function closePl(){ pv.pause(); if(hlsInst){ hlsInst.destroy(); hlsInst=null; } pv.removeAttribute('src'); pv.load(); }
+  document.getElementById('pl-close')?.addEventListener('click',()=>dlg.close());
+  dlg?.addEventListener('close',closePl);
+  dlg?.addEventListener('click',e=>{ if(e.target===dlg) dlg.close(); });
 
   /* active pill in nav */
   const links = [...document.querySelectorAll('nav.pills a')];
