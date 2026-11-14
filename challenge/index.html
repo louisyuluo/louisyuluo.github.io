@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Strategy Formulation Challenge · Louis Yu Luo</title>
+<meta name="description" content="The Strategy Formulation Challenge: introduction, latest updates, results and registration.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a single dark scroll in the shape of an academic "about" page (pill nav, eyebrow + big headline, thesis thread, three pillars, numbered papers, timeline), with yellow as the only colour and a live contrarian particle field as the signature visual. Single theme by choice. */
+:root{
+  --bg:#000000;
+  --surface:#0c0a05;
+  --surface-2:#17130a;
+  --line:#2e2510;
+  --yellow:#f2b705;
+  --glow:rgba(242,183,5,.35);
+  --yellow-soft:#cdbb8a;
+  --muted:#8f8458;
+  --font-sans:"Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:"Geist Mono", ui-monospace, Menlo, Consolas, monospace;
+  --font-accent:"Instrument Serif", Georgia, serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--yellow-soft);font:400 17px/1.7 var(--font-sans);-webkit-font-smoothing:antialiased}
+a{color:var(--yellow);text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--yellow) 35%,transparent);text-underline-offset:3px;transition:color .2s,text-decoration-color .2s}
+a:hover{text-decoration-color:var(--yellow)}
+:focus-visible{outline:2px solid var(--yellow);outline-offset:3px;border-radius:6px}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:16px;top:12px;z-index:100;background:var(--yellow);color:#000;padding:8px 12px;border-radius:8px}
+.wrap{max-width:880px;margin:0 auto;padding:0 clamp(16px,4vw,32px)}
+strong{color:var(--yellow);font-weight:600}
+
+/* ---------- top bar ---------- */
+header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top .bar{max-width:1100px;margin:0 auto;padding:0 clamp(16px,4vw,32px);height:60px;display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--yellow);font-weight:600;white-space:nowrap}
+.brand .dot{width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ffe27a,var(--yellow) 55%,#8a5e00);box-shadow:0 0 18px color-mix(in srgb,var(--yellow) 55%,transparent)}
+nav.pills{margin-left:auto;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+nav.pills::-webkit-scrollbar{display:none}
+nav.pills a{font-size:14px;font-weight:500;color:var(--yellow-soft);text-decoration:none;padding:6px 12px;border-radius:999px;white-space:nowrap;transition:background .2s,color .2s}
+nav.pills a:hover{background:var(--surface-2);color:var(--yellow)}
+nav.pills a.on{background:var(--yellow);color:#000}
+@media (max-width:720px){.brand span.full{display:none}}
+
+/* ---------- shared section pieces ---------- */
+section{padding:clamp(64px,9vw,104px) 0;border-bottom:1px solid var(--line)}
+.eyebrow{display:flex;align-items:center;gap:10px;font:600 12px/1.4 var(--font-sans);letter-spacing:.12em;text-transform:uppercase;color:var(--yellow);margin:0 0 18px}
+.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--yellow);box-shadow:0 0 10px var(--yellow)}
+h1,h2,h3{color:var(--yellow);text-wrap:balance;margin:0}
+h1{font-size:clamp(40px,6.4vw,64px);line-height:1.04;font-weight:700;letter-spacing:-.03em;background:linear-gradient(100deg,#ffd23f 0%,#f2b705 45%,#ff9f1c 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 22px var(--glow))}
+h2{text-shadow:0 0 24px var(--glow)}
+.bio{margin-top:40px;padding:24px 26px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,rgba(242,183,5,.06),rgba(242,183,5,0) 60%),var(--surface);box-shadow:inset 0 1px 0 rgba(242,183,5,.12)}
+.bio p:last-child{margin-bottom:0}
+h2{font-size:clamp(30px,4.4vw,42px);line-height:1.1;font-weight:700;letter-spacing:-.025em;margin-bottom:22px}
+h3{font-size:19px;line-height:1.3;font-weight:600;letter-spacing:-.01em}
+em.serif{font-family:var(--font-accent);font-style:italic;font-weight:400;letter-spacing:0}
+p{margin:0 0 16px;max-width:66ch}
+.lead{font-size:clamp(18px,2vw,20px);color:var(--yellow-soft)}
+.muted{color:var(--muted)}
+.mono{font-family:var(--font-mono)}
+.todo{display:inline-block;color:var(--muted);border:1px dashed var(--line);padding:1px 8px;border-radius:6px;font:400 13px/1.6 var(--font-mono)}
+
+/* ---------- hero ---------- */
+.hero{padding-top:clamp(48px,8vw,88px)}
+.hero h1 .zh{display:inline-block;font-family:"Noto Sans SC",sans-serif;font-weight:500;font-size:.5em;letter-spacing:.12em;color:var(--muted);vertical-align:middle;margin-left:.3em}
+.hero .lead{margin-top:24px}
+.who{margin:18px 0 0;font-size:16px;line-height:1.6}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:999px;font-size:15px;font-weight:600;text-decoration:none;border:1px solid var(--line);background:var(--surface-2);color:var(--yellow);transition:transform .15s,background .2s,border-color .2s}
+.btn:hover{border-color:var(--yellow);transform:translateY(-1px)}
+.btn.primary{background:var(--yellow);color:#000;border-color:var(--yellow)}
+.btn.primary:hover{background:#ffc933;box-shadow:0 0 24px var(--glow)}
+.btn svg{width:16px;height:16px}
+
+.stage{position:relative;margin-top:44px;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:radial-gradient(120% 90% at 50% 100%,#1a1606 0%,#000 70%);height:clamp(240px,34vw,320px)}
+#field{position:absolute;inset:0;width:100%;height:100%;display:block}
+.stage .cap{position:absolute;left:18px;top:14px;font:400 italic 17px/1.3 var(--font-accent);color:var(--yellow-soft)}
+.stage .legend{position:absolute;right:16px;bottom:12px;display:flex;gap:14px;font:400 11px/1 var(--font-mono);color:var(--muted)}
+.stage .legend b{font-weight:400;display:inline-flex;align-items:center;gap:6px}
+.stage .legend b::before{content:"";width:14px;height:2px;border-radius:2px;background:#7d6a1c}
+.stage .legend b.c::before{background:var(--yellow)}
+.stage .ctrl{position:absolute;right:12px;top:12px;font:500 12px/1 var(--font-sans);background:var(--surface-2);color:var(--yellow-soft);border:1px solid var(--line);border-radius:999px;padding:7px 12px;cursor:pointer}
+.stage .ctrl:hover{color:var(--yellow);border-color:var(--yellow)}
+
+.callout{margin-top:22px;display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.callout svg{flex:none;width:20px;height:20px;margin-top:3px;color:var(--yellow)}
+.callout small{display:block;font:600 11px/1.4 var(--font-sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.callout b{display:block;color:var(--yellow);font-weight:600;font-size:17px;line-height:1.4;margin-top:2px}
+
+/* ---------- thesis ---------- */
+blockquote{margin:26px 0;padding:4px 0 4px 20px;border-left:2px solid var(--yellow)}
+blockquote small{display:block;font:500 13px/1.4 var(--font-sans);color:var(--muted);margin-bottom:6px}
+blockquote p{color:var(--yellow);font-size:19px;line-height:1.5;margin:0}
+
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:34px}
+@media (max-width:720px){.pillars{grid-template-columns:1fr}}
+.pillar{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;transition:border-color .2s,transform .2s}
+.pillar:hover{border-color:color-mix(in srgb,var(--yellow) 60%,var(--line));transform:translateY(-2px)}
+.pillar .k{font:600 11px/1 var(--font-sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.pillar h3{margin:10px 0 8px}
+.pillar p{font-size:15px;line-height:1.6;color:var(--yellow-soft);margin:0}
+.pillar .glyph{font:500 26px/1 var(--font-mono);color:var(--yellow);margin-bottom:14px;display:block}
+
+/* ---------- projects ---------- */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 28px;margin-top:8px}
+@media (max-width:640px){.grid2{grid-template-columns:1fr}}
+.proj{padding:20px 0;border-top:1px solid var(--line)}
+.proj .k{font:600 11px/1 var(--font-sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.proj h3{margin:8px 0 6px}
+.proj p{font-size:15px;line-height:1.6;margin:0}
+
+/* ---------- publications ---------- */
+.pubs{list-style:none;margin:0;padding:0;counter-reset:pub}
+.pub{display:grid;grid-template-columns:150px 1fr;gap:22px;padding:26px 0;border-top:1px solid var(--line)}
+.pub:last-child{border-bottom:1px solid var(--line)}
+@media (max-width:640px){.pub{grid-template-columns:1fr}}
+.fig{position:relative;aspect-ratio:4/3;border-radius:12px;border:1px solid var(--line);background:var(--surface);overflow:hidden}
+.fig svg{position:absolute;inset:0;width:100%;height:100%}
+.fig::after{counter-increment:pub;content:"0" counter(pub);position:absolute;left:10px;top:8px;font:500 12px/1 var(--font-mono);color:var(--muted)}
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.badge{font:500 12px/1 var(--font-sans);padding:6px 10px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);color:var(--yellow-soft)}
+.badge.y{background:var(--yellow);border-color:var(--yellow);color:#000}
+.pub h3{font-size:20px;margin-bottom:6px}
+.pub .by{font-size:15px;color:var(--muted);margin:0 0 12px}
+.pub dl{margin:0;display:grid;gap:6px}
+.pub dt{display:inline;font-weight:600;color:var(--yellow)}
+.pub dd{display:inline;margin:0;font-size:15px}
+.pub dl div{line-height:1.55}
+.links{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.links span{font:500 12px/1 var(--font-mono);padding:7px 11px;border-radius:999px;border:1px dashed var(--line);color:var(--muted)}
+
+/* ---------- experience / timeline ---------- */
+.tl{list-style:none;margin:0;padding:0}
+.tl li{display:grid;grid-template-columns:150px 1fr;gap:20px;padding:18px 0;border-top:1px solid var(--line)}
+.tl li:last-child{border-bottom:1px solid var(--line)}
+@media (max-width:560px){.tl li{grid-template-columns:1fr;gap:4px}}
+.tl time{font:400 14px/1.7 var(--font-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.tl b{color:var(--yellow);font-weight:600}
+.tl p{margin:4px 0 0;font-size:15px}
+
+/* ---------- media / articles ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:8px;min-height:150px}
+.card .k{font:600 11px/1 var(--font-sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.card h3{font-size:17px}
+.card p{font-size:14px;margin:0;color:var(--muted)}
+.card .when{margin-top:auto;font:400 12px/1 var(--font-mono);color:var(--muted)}
+
+/* ---------- media: video reports ---------- */
+.vstats{display:flex;flex-wrap:wrap;gap:8px 22px;margin:6px 0 20px;font:400 14px/1.4 var(--font-mono);color:var(--muted)}
+.vstats b{color:var(--yellow);font-weight:500}
+.vfilters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.vfilters button{font:500 13px/1 var(--font-sans);padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--yellow-soft);cursor:pointer}
+.vfilters button:hover{border-color:var(--yellow)}
+.vfilters button.on{background:var(--yellow);color:#000;border-color:var(--yellow)}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.vid{display:flex;flex-direction:column;text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:border-color .2s,transform .2s}
+.vid:hover{border-color:var(--yellow);transform:translateY(-2px)}
+.vid[hidden]{display:none}
+.thumb{position:relative;aspect-ratio:16/9;background:linear-gradient(135deg,#1a1606,#000);display:block;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.85);transition:transform .3s}
+.vid:hover .thumb img{transform:scale(1.04)}
+.play{position:absolute;left:12px;bottom:12px;width:36px;height:36px;border-radius:50%;background:var(--yellow);box-shadow:0 4px 18px rgba(0,0,0,.5)}
+.play::after{content:"";position:absolute;left:14px;top:11px;border-left:11px solid #000;border-top:7px solid transparent;border-bottom:7px solid transparent}
+.vmeta{display:flex;flex-direction:column;gap:6px;padding:14px 16px 16px}
+.vmeta .k{font:600 11px/1.3 var(--font-sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.vmeta b{color:var(--yellow);font-weight:600;font-size:15px;line-height:1.4}
+.vmeta .when{font:400 12px/1 var(--font-mono);color:var(--muted)}
+.subh{margin:48px 0 14px;font-size:20px}
+.vid .role{position:absolute;right:10px;top:10px;font:600 11px/1 var(--font-sans);letter-spacing:.06em;text-transform:uppercase;padding:6px 9px;border-radius:999px;background:rgba(0,0,0,.72);color:var(--yellow);border:1px solid rgba(242,183,5,.4)}
+.vid.feat .role{background:var(--yellow);color:#000;border-color:var(--yellow)}
+.vid.feat{border-color:color-mix(in srgb,var(--yellow) 45%,var(--line))}
+
+#player{width:min(880px,94vw);padding:0;border:1px solid var(--line);border-radius:18px;background:var(--surface);color:var(--yellow-soft);box-shadow:0 0 60px rgba(242,183,5,.18)}
+#player::backdrop{background:rgba(0,0,0,.78);backdrop-filter:blur(4px)}
+.pl-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.pl-head b{color:var(--yellow);font-weight:600}
+#pl-close{font:500 13px/1 var(--font-sans);background:var(--surface-2);color:var(--yellow-soft);border:1px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer}
+#pl-close:hover{border-color:var(--yellow);color:var(--yellow)}
+#pl-video{display:block;width:100%;aspect-ratio:16/9;background:#000}
+.pl-note{margin:0;padding:12px 18px;font-size:13px;color:var(--muted)}
+
+/* ---------- cv ---------- */
+.cvhead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}
+.cvhead h2{margin:0}
+
+/* ---------- connect ---------- */
+.lineage{display:grid;grid-template-columns:110px 1fr;gap:8px 18px;font-size:15px;margin:10px 0 28px}
+.lineage dt{font:500 13px/1.7 var(--font-mono);color:var(--muted)}
+.lineage dd{margin:0}
+.social{display:flex;flex-wrap:wrap;gap:10px;padding-top:24px;border-top:1px solid var(--line)}
+.social a,.social span{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface);font-size:14px;font-weight:500;text-decoration:none;color:var(--yellow)}
+.social a:hover{border-color:var(--yellow)}
+.social span{color:var(--muted);border-style:dashed}
+.social svg{width:17px;height:17px}
+
+footer{padding:36px 0 56px;font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+footer a{color:var(--muted)}
+
+/* ---------- challenge page ---------- */
+.ch-hero{padding:clamp(56px,8vw,96px) 0 clamp(48px,6vw,72px)}
+.status{display:inline-flex;align-items:center;gap:8px;font:500 13px/1 var(--font-mono);padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface-2);color:var(--yellow-soft);margin-bottom:22px}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--yellow);box-shadow:0 0 10px var(--yellow);animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){.status i{animation:none}}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:34px}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.fact .k{font:600 11px/1 var(--font-sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.fact b{display:block;margin-top:8px;color:var(--yellow);font-weight:600}
+.tabs{position:sticky;top:60px;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.tabs .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:10px;padding-bottom:10px;scrollbar-width:none}
+.tabs a{font-size:14px;font-weight:500;color:var(--yellow-soft);text-decoration:none;padding:6px 12px;border-radius:999px;white-space:nowrap}
+.tabs a:hover{background:var(--surface-2);color:var(--yellow)}
+.steps{list-style:none;counter-reset:s;margin:0;padding:0;display:grid;gap:12px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.steps li::before{content:counter(s,decimal-leading-zero);font:500 15px/1.6 var(--font-mono);color:var(--yellow)}
+.steps p{margin:4px 0 0;font-size:15px}
+.upd{list-style:none;margin:0;padding:0}
+.upd li{display:grid;grid-template-columns:130px 1fr;gap:20px;padding:18px 0;border-top:1px solid var(--line)}
+.upd li:last-child{border-bottom:1px solid var(--line)}
+@media (max-width:560px){.upd li{grid-template-columns:1fr;gap:4px}}
+.upd time{font:400 14px/1.7 var(--font-mono);color:var(--muted)}
+.upd b{color:var(--yellow);font-weight:600}
+.upd p{margin:4px 0 0;font-size:15px}
+.tbl{width:100%;border-collapse:collapse;font-size:15px}
+.tbl th{font:600 11px/1 var(--font-sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;padding:12px 10px;border-bottom:1px solid var(--line)}
+.tbl td{padding:14px 10px;border-bottom:1px solid var(--line)}
+.tbl td:first-child{font-family:var(--font-mono);color:var(--yellow);width:56px}
+.tbl tr.top1 td{background:linear-gradient(90deg,rgba(242,183,5,.10),transparent)}
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.note{font-size:14px;color:var(--muted);margin-top:12px}
+details{border-top:1px solid var(--line);padding:16px 0}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;color:var(--yellow);font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--font-mono);color:var(--muted)}
+details[open] summary::after{content:"–"}
+details p{margin:10px 0 0;font-size:15px}
+.cta{margin-top:26px;padding:26px;border:1px solid color-mix(in srgb,var(--yellow) 45%,var(--line));border-radius:18px;background:linear-gradient(180deg,rgba(242,183,5,.08),rgba(242,183,5,0) 70%),var(--surface);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px}
+.cta h3{margin:0 0 4px}
+.cta p{margin:0;font-size:15px}
+.btn[aria-disabled=true]{opacity:.55;pointer-events:none}
+footer{padding:36px 0;font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="bar">
+    <a class="brand" href="/" aria-label="Louis Yu Luo, home"><i class="dot" aria-hidden="true"></i><span>Louis Yu Luo</span></a>
+    <nav class="pills" aria-label="Site">
+      <a href="/#about">about</a>
+      <a href="/#projects" class="on">projects</a>
+      <a href="/#publications">publications</a>
+      <a href="/#media">media</a>
+      <a href="/#cv">CV</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section class="ch-hero" style="border-bottom:0">
+  <div class="wrap">
+    <p class="eyebrow">Project · Strategy Formulation Challenge</p>
+    <div class="status"><i aria-hidden="true"></i><span id="st">Status: <span class="todo">e.g. Registration open</span></span></div>
+    <h1>Strategy Formulation Challenge</h1>
+    <p class="lead" style="margin-top:22px"><span class="todo">One-sentence pitch: what participants do and why it matters</span></p>
+    <div class="btns">
+      <a class="btn primary" href="#register" id="regbtn">Register now <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <a class="btn" href="#results">See results</a>
+    </div>
+    <div class="facts">
+      <div class="fact"><span class="k">Who can join</span><b><span class="todo">eligibility</span></b></div>
+      <div class="fact"><span class="k">Format</span><b><span class="todo">online / in person, individual / team</span></b></div>
+      <div class="fact"><span class="k">Deadline</span><b><span class="todo">date</span></b></div>
+      <div class="fact"><span class="k">Prizes</span><b><span class="todo">prizes</span></b></div>
+    </div>
+  </div>
+</section>
+
+<nav class="tabs" aria-label="On this page"><div class="wrap">
+  <a href="#about">About</a><a href="#how">How it works</a><a href="#updates">Latest updates</a><a href="#results">Results</a><a href="#register">Register</a><a href="#faq">FAQ</a>
+</div></nav>
+
+<section id="about">
+  <div class="wrap">
+    <p class="eyebrow">About the challenge</p>
+    <h2>Why this challenge.</h2>
+    <p><span class="todo">2–3 sentences: the problem participants tackle, what a good strategy looks like, who runs it (e.g. Imperial Business School) and how it connects to research on strategy formulation</span></p>
+    <p class="muted">Organised by Louis Yu Luo, Imperial College Business School. <span class="todo">partners / sponsors</span></p>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <p class="eyebrow">How it works</p>
+    <h2>From case to strategy.</h2>
+    <ol class="steps">
+      <li><div><b style="color:var(--yellow)">Register</b><p><span class="todo">how to sign up, team size</span></p></div></li>
+      <li><div><b style="color:var(--yellow)">Receive the case</b><p><span class="todo">what the case/brief is and when it is released</span></p></div></li>
+      <li><div><b style="color:var(--yellow)">Formulate your strategy</b><p><span class="todo">what to submit: deck, memo, time limit</span></p></div></li>
+      <li><div><b style="color:var(--yellow)">Judging &amp; results</b><p><span class="todo">judging criteria, judges, final round</span></p></div></li>
+    </ol>
+  </div>
+</section>
+
+<section id="updates">
+  <div class="wrap">
+    <p class="eyebrow">Latest updates</p>
+    <h2>News from the challenge.</h2>
+    <ol class="upd">
+      <li><time><span class="todo">date</span></time><div><b><span class="todo">update title</span></b><p><span class="todo">short description</span></p></div></li>
+      <li><time><span class="todo">date</span></time><div><b>Challenge page launched</b><p>Introduction, results and registration now live on this page.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<section id="results">
+  <div class="wrap">
+    <p class="eyebrow">Results</p>
+    <h2>Winners &amp; rankings.</h2>
+    <div class="tblwrap"><table class="tbl">
+      <thead><tr><th>#</th><th>Team / participant</th><th>Affiliation</th><th>Award</th></tr></thead>
+      <tbody>
+        <tr class="top1"><td>01</td><td><span class="todo">name</span></td><td><span class="todo">school</span></td><td><span class="todo">award</span></td></tr>
+        <tr><td>02</td><td><span class="todo">name</span></td><td><span class="todo">school</span></td><td><span class="todo">award</span></td></tr>
+        <tr><td>03</td><td><span class="todo">name</span></td><td><span class="todo">school</span></td><td><span class="todo">award</span></td></tr>
+      </tbody>
+    </table></div>
+    <p class="note"><span class="todo">results date / edition, e.g. 2025 edition</span></p>
+  </div>
+</section>
+
+<section id="register">
+  <div class="wrap">
+    <p class="eyebrow">Register</p>
+    <h2>Take part.</h2>
+    <div class="cta">
+      <div><h3>Registration</h3><p><span class="todo">deadline and anything to prepare</span></p></div>
+      <a class="btn primary" href="#register" aria-disabled="true">Registration link coming soon</a>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <p class="eyebrow">FAQ</p>
+    <h2>Questions.</h2>
+    <details><summary>Who can participate?</summary><p><span class="todo">answer</span></p></details>
+    <details><summary>Is there a fee?</summary><p><span class="todo">answer</span></p></details>
+    <details><summary>How are submissions judged?</summary><p><span class="todo">answer</span></p></details>
+    <details><summary>How will my data be used?</summary><p><span class="todo">answer, e.g. if submissions are used for research</span></p></details>
+    <p class="note" style="margin-top:22px">Questions? Email <a href="mailto:louis.luo@imperial.ac.uk">louis.luo@imperial.ac.uk</a>.</p>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap"><span>© 2026 Louis Yu Luo · <span lang="zh-Hans">罗煜</span></span><a href="/">← Back to homepage</a></div></footer>
+</body>
+</html>
