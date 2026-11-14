@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Louis Yu Luo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400&text=%E7%BD%97%E7%85%9C&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: a dark "market" field where the crowd drifts one way and a few vermilion particles move against it; content sits in a narrow left-aligned column with mono index labels. Single theme by choice. */
+:root{
+  --ink:#000000;        /* background */
+  --panel:#0f0e08;      /* raised surfaces */
+  --line:#2a2714;       /* hairlines */
+  --text:#ffd400;       /* yellow text */
+  --muted:#a69a5c;      /* secondary text, dimmed yellow */
+  --contra:#fff15a;     /* bright yellow highlight */
+  --font-display:"Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --font-body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--ink);color:var(--text);font:400 16px/1.65 var(--font-body);-webkit-font-smoothing:antialiased}
+a{color:var(--text);text-decoration:none;border-bottom:1px solid var(--line);transition:border-color .2s,color .2s}
+a:hover{color:var(--contra);border-color:var(--contra)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--contra);outline-offset:3px;border-radius:2px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
+
+/* nav */
+nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--ink) 82%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:56px}
+.mark{font-family:var(--font-display);font-size:22px;border:0;letter-spacing:.01em}
+.mark span{color:var(--contra)}
+nav ul{display:flex;gap:clamp(12px,2.4vw,28px);list-style:none;margin:0;padding:0;font:500 12px/1 var(--font-mono);letter-spacing:.08em;text-transform:uppercase}
+nav ul a{border:0;color:var(--muted)}
+nav ul a:hover,nav ul a.on{color:var(--text)}
+@media (max-width:640px){nav ul li.opt{display:none} nav ul{gap:12px;font-size:11px} .mark{font-size:18px}}
+
+/* hero */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+#field{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero .wrap{position:relative;padding-top:clamp(72px,12vw,140px);padding-bottom:clamp(56px,8vw,96px);pointer-events:none}
+.hero .wrap a{pointer-events:auto}
+.kicker{font:500 12px/1.4 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;gap:10px;align-items:center}
+.kicker i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--contra);box-shadow:0 0 12px var(--contra)}
+h1{font-family:var(--font-display);font-weight:400;font-size:clamp(56px,11vw,128px);line-height:.92;letter-spacing:-.02em;margin:22px 0 0;text-wrap:balance}
+h1 em{font-style:italic;color:var(--contra)}
+h1 .zh{display:block;font-family:"Noto Serif SC","Songti SC",serif;font-size:.42em;letter-spacing:.3em;margin-top:18px;color:var(--muted)}
+.lede strong,.paper h3,h2{color:var(--text)}
+body{color:#f2e7b0}
+p strong{color:var(--text);font-weight:500}
+.lede{max-width:34ch;font-family:var(--font-display);font-size:clamp(22px,2.6vw,30px);line-height:1.3;margin:28px 0 0;color:var(--text)}
+.lede em{color:var(--contra)}
+.meta{margin-top:32px;display:flex;flex-wrap:wrap;gap:8px 24px;font:400 13px/1.5 var(--font-mono);color:var(--muted)}
+.legend{position:absolute;right:clamp(16px,4vw,40px);bottom:18px;font:400 11px/1.4 var(--font-mono);color:var(--muted);display:flex;gap:16px;pointer-events:none}
+.legend b{font-weight:400;display:inline-flex;align-items:center;gap:6px}
+.legend b::before{content:"";width:14px;height:1.5px;background:var(--muted)}
+.legend b.c::before{background:var(--contra)}
+@media (max-width:640px){.legend{display:none}}
+
+/* sections */
+section.block{padding:clamp(64px,9vw,112px) 0;border-bottom:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:200px 1fr;gap:clamp(24px,5vw,64px)}
+@media (max-width:760px){.grid{grid-template-columns:1fr;gap:20px}}
+.label{font:500 12px/1.4 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);position:sticky;top:88px;align-self:start}
+.label span{color:var(--contra);margin-right:8px}
+h2{font-family:var(--font-display);font-weight:400;font-size:clamp(34px,4.6vw,52px);line-height:1.05;margin:0 0 24px;letter-spacing:-.01em;text-wrap:balance}
+p{margin:0 0 16px;max-width:65ch}
+.muted{color:var(--muted)}
+
+/* interests */
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px;padding:0;list-style:none}
+.tags li{font:400 13px/1 var(--font-mono);padding:9px 12px;border:1px solid var(--line);border-radius:999px;color:var(--text);transition:border-color .2s}
+.tags li:hover{border-color:var(--contra)}
+
+/* papers */
+.papers{list-style:none;margin:0;padding:0;counter-reset:p}
+.paper{position:relative;display:grid;grid-template-columns:56px 1fr;gap:8px 20px;padding:28px 0;border-top:1px solid var(--line)}
+.paper:last-child{border-bottom:1px solid var(--line)}
+.paper::before{counter-increment:p;content:"0" counter(p);font:500 13px/1 var(--font-mono);color:var(--muted);padding-top:8px}
+.paper:hover::before{color:var(--contra)}
+.paper h3{font-family:var(--font-display);font-weight:400;font-size:clamp(24px,2.8vw,30px);line-height:1.15;margin:0 0 10px;text-wrap:balance}
+.paper p{color:var(--muted);margin:0 0 14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:400 11px/1 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;padding:6px 9px;border-radius:3px;background:var(--panel);color:var(--muted);border:1px solid var(--line)}
+.chip.st{color:var(--contra);border-color:color-mix(in srgb,var(--contra) 40%,var(--line))}
+
+/* through-line diagram */
+.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:40px}
+@media (max-width:640px){.flow{grid-template-columns:1fr}}
+.flow div{background:var(--ink);padding:22px 20px}
+.flow small{font:500 11px/1 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--contra)}
+.flow strong{display:block;font-family:var(--font-display);font-weight:400;font-size:24px;margin:10px 0 6px}
+.flow span{font-size:14px;color:var(--muted)}
+
+/* methods */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.card{background:var(--ink);padding:24px 22px;transition:background .25s}
+.card:hover{background:var(--panel)}
+.card .n{font-family:var(--font-display);font-size:44px;line-height:1;color:var(--text);font-variant-numeric:tabular-nums}
+.card .n em{color:var(--contra);font-style:normal}
+.card h4{font:500 12px/1.4 var(--font-mono);letter-spacing:.08em;text-transform:uppercase;margin:14px 0 6px;color:var(--text)}
+.card p{font-size:14px;color:var(--muted);margin:0}
+
+/* cv timeline */
+.tl{list-style:none;margin:0;padding:0}
+.tl li{display:grid;grid-template-columns:150px 1fr;gap:20px;padding:18px 0;border-top:1px solid var(--line)}
+.tl li:last-child{border-bottom:1px solid var(--line)}
+@media (max-width:520px){.tl li{grid-template-columns:1fr;gap:4px}}
+.tl time{font:400 13px/1.6 var(--font-mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.tl b{font-weight:500}
+.todo{color:var(--muted);border:1px dashed var(--line);padding:2px 8px;border-radius:3px;font:400 12px/1.6 var(--font-mono)}
+
+/* contact */
+.contact{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:8px}
+.contact a,.contact div{display:block;border:1px solid var(--line);padding:18px;border-radius:4px}
+.contact a:hover{border-color:var(--contra)}
+.contact small{display:block;font:500 11px/1 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+
+footer{padding:36px 0 48px;font:400 12px/1.6 var(--font-mono);color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+</style>
+</head>
+<body>
+
+<nav aria-label="Main">
+  <div class="wrap">
+    <a class="mark" href="#top">L<span>.</span>Y<span>.</span>Luo</a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#work">Work Experience</a></li>
+      <li><a href="#cv">CV</a></li>
+      <li class="opt"><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <canvas id="field" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="kicker"><i></i>PhD Candidate · Strategy · Imperial College London</div>
+    <h1>Louis <em>Yu</em> Luo<span class="zh" lang="zh-Hans">罗煜</span></h1>
+    <p class="lede">I study when going <em>against the consensus</em> pays off, and how investors and evaluators decide whether it should.</p>
+    <div class="meta">
+      <span>Imperial College Business School</span>
+      <span>London, UK</span>
+      <span>2022 – 2028 (expected)</span>
+    </div>
+  </div>
+  <div class="legend"><b>consensus</b><b class="c">contrarian</b></div>
+</header>
+
+<main>
+<section class="block" id="about">
+  <div class="wrap grid">
+    <div class="label"><span>01</span>About</div>
+    <div>
+      <h2>Strategy, differentiation, and the audiences who judge it.</h2>
+      <p>I am a doctoral researcher in Strategy and Management at Imperial College London. My dissertation develops a theory of <strong>contrarian strategy</strong>: strategies that challenge, rather than follow, the prevailing consensus in a market.</p>
+      <p>A firm can be distant from its peers without contradicting them. I separate these two components of differentiation, model when consensus-challenging strategies attract capital, and test the predictions across venture funding, peer review and patent data. A third study looks inside the head of the strategist, using think-aloud protocols to see where contrarian choices come from.</p>
+      <ul class="tags" aria-label="Research interests">
+        <li>Contrarian strategy</li>
+        <li>Optimal distinctiveness</li>
+        <li>Audience evaluation</li>
+        <li>Entrepreneurial finance</li>
+        <li>Strategy formulation</li>
+        <li>Formal theory</li>
+        <li>LLMs as research tools</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="research">
+  <div class="wrap grid">
+    <div class="label"><span>02</span>Research</div>
+    <div>
+      <h2>Working papers</h2>
+      <ol class="papers">
+        <li class="paper">
+          <div>
+            <h3>When Contrarian Strategy Attracts Capital: An Audience-Contingent Theory of Investable Value</h3>
+            <p>A parsimonious formal model that defines contrarianism, distinguishes it from distance-based differentiation, and derives when audiences reward strategies that challenge the consensus.</p>
+            <div class="chips"><span class="chip st">Working paper</span><span class="chip">Theory</span><span class="chip">Dissertation ch. 1</span></div>
+          </div>
+        </li>
+        <li class="paper">
+          <div>
+            <h3>Disagreeing with the Market, Disagreeing about the Venture</h3>
+            <p>An empirical study of audience disagreement: how investors evaluate ventures whose strategies contradict market consensus, and why such ventures split opinion.</p>
+            <div class="chips"><span class="chip st">Working paper</span><span class="chip">Empirical</span><span class="chip">Venture funding</span></div>
+          </div>
+        </li>
+        <li class="paper">
+          <div>
+            <h3>Thinking Against the Grain: A Think-Aloud Study of Strategy Formulation</h3>
+            <p>Using think-aloud protocols from 80 sessions to trace how individuals arrive at consensus-following or consensus-challenging strategies.</p>
+            <div class="chips"><span class="chip st">In progress</span><span class="chip">Think-aloud</span><span class="chip">Cognition</span></div>
+          </div>
+        </li>
+      </ol>
+
+      <div class="flow" aria-label="Dissertation through-line">
+        <div><small>Formulation</small><strong>Where it comes from</strong><span>How strategists arrive at a contrarian position.</span></div>
+        <div><small>Theory</small><strong>What it is</strong><span>Defining contrarianism and deriving its consequences.</span></div>
+        <div><small>Evaluation</small><strong>How it is judged</strong><span>How audiences disagree about contrarian bets.</span></div>
+      </div>
+
+      <h2 style="margin-top:56px">Methods &amp; data</h2>
+<div class="cards">
+        <div class="card"><div class="n">f(<em>d</em>,<em>b</em>)</div><h4>Formal theory</h4><p>Minimal models separating distance from consensus-challenging share.</p></div>
+        <div class="card"><div class="n">~60<em>k</em></div><h4>Fund-quarters</h4><p>SEC N-PORT holdings for measuring consensus among active investors.</p></div>
+        <div class="card"><div class="n">ICLR</div><h4>Peer review</h4><p>OpenReview submissions and reviews as a lens on how evaluators judge novelty.</p></div>
+        <div class="card"><div class="n">80</div><h4>Think-aloud sessions</h4><p>Verbal protocols of strategy formulation, coded with human and LLM support.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="work">
+  <div class="wrap grid">
+    <div class="label"><span>03</span>Work Experience</div>
+    <div>
+      <h2>Work experience</h2>
+      <ol class="tl">
+        <li><time>2022 – now</time><div><b>Doctoral Researcher</b><br><span class="muted">Imperial College Business School, London</span></div></li>
+        <li><time>Year – Year</time><div><b><span class="todo">Role title</span></b><br><span class="muted"><span class="todo">Organisation, City</span></span><br><span class="todo">One line on what you did</span></div></li>
+        <li><time>Year – Year</time><div><b><span class="todo">Role title</span></b><br><span class="muted"><span class="todo">Organisation, City</span></span><br><span class="todo">One line on what you did</span></div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+
+<section class="block" id="cv">
+  <div class="wrap grid">
+    <div class="label"><span>04</span>CV</div>
+    <div>
+      <h2>Curriculum vitae</h2>
+      <ol class="tl">
+        <li><time>2022 – 2028</time><div><b>PhD, Strategy &amp; Management</b><br><span class="muted">Imperial College Business School, Imperial College London</span></div></li>
+        <li><time>Earlier</time><div><span class="todo">Add prior degrees</span></div></li>
+        <li><time>Teaching</time><div><span class="todo">Add teaching assistantships</span></div></li>
+        <li><time>Presentations</time><div><span class="todo">Add conferences (e.g. AOM, SMS)</span></div></li>
+      </ol>
+      <p style="margin-top:24px"><a href="#cv">Download full CV (PDF)</a> <span class="muted">· link to be added</span></p>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="contact">
+  <div class="wrap grid">
+    <div class="label"><span>05</span>Contact</div>
+    <div>
+      <h2>Get in touch.</h2>
+      <p class="muted">Happy to talk about contrarian strategy, differentiation, or using LLMs in management research.</p>
+      <div class="contact">
+        <div><small>Email</small><span class="todo">your.name@imperial.ac.uk</span></div>
+        <div><small>Google Scholar</small><span class="todo">Add link</span></div>
+        <div><small>LinkedIn</small><span class="todo">Add link</span></div>
+        <div><small>Office</small>Imperial College Business School<br>South Kensington, London</div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Louis Yu Luo · 罗煜</span>
+    <span>One in nine particles above moves against the crowd.</span>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const cv = document.getElementById('field');
+  const ctx = cv.getContext('2d');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let W, H, dpr, P = [], mouse = {x:-1e4, y:-1e4};
+  const SHARE = 1/9;
+
+  function resize(){
+    const r = cv.getBoundingClientRect();
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    W = r.width; H = r.height;
+    cv.width = W*dpr; cv.height = H*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const n = Math.round(Math.min(420, W*H/2600));
+    P = Array.from({length:n}, (_, i) => spawn(i < n*SHARE, true));
+    if (reduce) drawStatic();
+  }
+  function spawn(c, anywhere){
+    const v = 0.35 + Math.random()*0.55;
+    return { c, x: anywhere ? Math.random()*W : (c ? W+10 : -10), y: Math.random()*H,
+             v: c ? -v*1.15 : v, ph: Math.random()*6.28, px:0, py:0 };
+  }
+  function flow(x, y, t){ return Math.sin(y*0.006 + t*0.0004) * 0.9 + Math.cos(x*0.004 - t*0.0003) * 0.5; }
+
+  function step(t){
+    ctx.fillStyle = 'rgba(0,0,0,0.16)';
+    ctx.fillRect(0,0,W,H);
+    for (const p of P){
+      p.px = p.x; p.py = p.y;
+      const a = flow(p.x, p.y, t);
+      p.x += p.v;
+      p.y += Math.sin(a + p.ph) * 0.45 * (p.c ? -1 : 1);
+      const dx = p.x - mouse.x, dy = p.y - mouse.y, d2 = dx*dx + dy*dy;
+      if (d2 < 12000){ const f = (12000 - d2)/12000; p.y += (dy>0?1:-1) * f * 2.2; }
+      if (p.x > W+12 || p.x < -12 || p.y < -12 || p.y > H+12){ Object.assign(p, spawn(p.c, false)); p.px = p.x; p.py = p.y; continue; }
+      ctx.beginPath();
+      ctx.moveTo(p.px, p.py); ctx.lineTo(p.x, p.y);
+      ctx.strokeStyle = p.c ? 'rgba(255,241,90,1)' : 'rgba(166,140,40,0.45)';
+      ctx.lineWidth = p.c ? 1.8 : 1.1;
+      ctx.stroke();
+    }
+    requestAnimationFrame(step);
+  }
+  function drawStatic(){
+    ctx.fillStyle = '#000'; ctx.fillRect(0,0,W,H);
+    for (const p of P){
+      ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x + (p.c?-14:14), p.y);
+      ctx.strokeStyle = p.c ? 'rgba(255,241,90,1)' : 'rgba(166,140,40,0.35)';
+      ctx.lineWidth = p.c ? 1.8 : 1.1; ctx.stroke();
+    }
+  }
+  addEventListener('resize', resize);
+  cv.parentElement.addEventListener('pointermove', e => { const r = cv.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; });
+  cv.parentElement.addEventListener('pointerleave', () => { mouse.x = mouse.y = -1e4; });
+  resize();
+  ctx.fillStyle = '#000'; ctx.fillRect(0,0,W,H);
+  if (!reduce) requestAnimationFrame(step);
+
+  // highlight current section in nav
+  const links = [...document.querySelectorAll('nav ul a')];
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) links.forEach(l => l.classList.toggle('on', l.getAttribute('href') === '#' + e.target.id));
+  }), {rootMargin:'-45% 0px -50% 0px'});
+  document.querySelectorAll('section.block').forEach(s => io.observe(s));
+})();
+</script>
+</body>
+</html>
