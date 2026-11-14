@@ -13,12 +13,13 @@
 /* Layout idea: a single dark scroll in the shape of an academic "about" page (pill nav, eyebrow + big headline, thesis thread, three pillars, numbered papers, timeline), with yellow as the only colour and a live contrarian particle field as the signature visual. Single theme by choice. */
 :root{
   --bg:#000000;
-  --surface:#0d0c07;
-  --surface-2:#16140b;
-  --line:#2b2713;
-  --yellow:#ffd400;
-  --yellow-soft:#f3e8b4;
-  --muted:#a2976a;
+  --surface:#0c0a05;
+  --surface-2:#17130a;
+  --line:#2e2510;
+  --yellow:#f2b705;
+  --glow:rgba(242,183,5,.35);
+  --yellow-soft:#cdbb8a;
+  --muted:#8f8458;
   --font-sans:"Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono:"Geist Mono", ui-monospace, Menlo, Consolas, monospace;
   --font-accent:"Instrument Serif", Georgia, serif;
@@ -40,7 +41,7 @@ strong{color:var(--yellow);font-weight:600}
 header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .top .bar{max-width:1100px;margin:0 auto;padding:0 clamp(16px,4vw,32px);height:60px;display:flex;align-items:center;gap:16px}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--yellow);font-weight:600;white-space:nowrap}
-.brand .dot{width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff59a,var(--yellow) 55%,#a88a00);box-shadow:0 0 18px color-mix(in srgb,var(--yellow) 55%,transparent)}
+.brand .dot{width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ffe27a,var(--yellow) 55%,#8a5e00);box-shadow:0 0 18px color-mix(in srgb,var(--yellow) 55%,transparent)}
 nav.pills{margin-left:auto;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
 nav.pills::-webkit-scrollbar{display:none}
 nav.pills a{font-size:14px;font-weight:500;color:var(--yellow-soft);text-decoration:none;padding:6px 12px;border-radius:999px;white-space:nowrap;transition:background .2s,color .2s}
@@ -53,7 +54,10 @@ section{padding:clamp(64px,9vw,104px) 0;border-bottom:1px solid var(--line)}
 .eyebrow{display:flex;align-items:center;gap:10px;font:600 12px/1.4 var(--font-sans);letter-spacing:.12em;text-transform:uppercase;color:var(--yellow);margin:0 0 18px}
 .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--yellow);box-shadow:0 0 10px var(--yellow)}
 h1,h2,h3{color:var(--yellow);text-wrap:balance;margin:0}
-h1{font-size:clamp(40px,6.4vw,64px);line-height:1.04;font-weight:700;letter-spacing:-.03em}
+h1{font-size:clamp(40px,6.4vw,64px);line-height:1.04;font-weight:700;letter-spacing:-.03em;background:linear-gradient(100deg,#ffd23f 0%,#f2b705 45%,#ff9f1c 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 22px var(--glow))}
+h2{text-shadow:0 0 24px var(--glow)}
+.bio{margin-top:40px;padding:24px 26px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,rgba(242,183,5,.06),rgba(242,183,5,0) 60%),var(--surface);box-shadow:inset 0 1px 0 rgba(242,183,5,.12)}
+.bio p:last-child{margin-bottom:0}
 h2{font-size:clamp(30px,4.4vw,42px);line-height:1.1;font-weight:700;letter-spacing:-.025em;margin-bottom:22px}
 h3{font-size:19px;line-height:1.3;font-weight:600;letter-spacing:-.01em}
 em.serif{font-family:var(--font-accent);font-style:italic;font-weight:400;letter-spacing:0}
@@ -72,7 +76,7 @@ p{margin:0 0 16px;max-width:66ch}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:999px;font-size:15px;font-weight:600;text-decoration:none;border:1px solid var(--line);background:var(--surface-2);color:var(--yellow);transition:transform .15s,background .2s,border-color .2s}
 .btn:hover{border-color:var(--yellow);transform:translateY(-1px)}
 .btn.primary{background:var(--yellow);color:#000;border-color:var(--yellow)}
-.btn.primary:hover{background:#ffe24d}
+.btn.primary:hover{background:#ffc933;box-shadow:0 0 24px var(--glow)}
 .btn svg{width:16px;height:16px}
 
 .stage{position:relative;margin-top:44px;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:radial-gradient(120% 90% at 50% 100%,#1a1606 0%,#000 70%);height:clamp(240px,34vw,320px)}
@@ -170,7 +174,7 @@ blockquote p{color:var(--yellow);font-size:19px;line-height:1.5;margin:0}
 .vmeta b{color:var(--yellow);font-weight:600;font-size:15px;line-height:1.4}
 .vmeta .when{font:400 12px/1 var(--font-mono);color:var(--muted)}
 .subh{margin:48px 0 14px;font-size:20px}
-.vid .role{position:absolute;right:10px;top:10px;font:600 11px/1 var(--font-sans);letter-spacing:.06em;text-transform:uppercase;padding:6px 9px;border-radius:999px;background:rgba(0,0,0,.72);color:var(--yellow);border:1px solid rgba(255,212,0,.35)}
+.vid .role{position:absolute;right:10px;top:10px;font:600 11px/1 var(--font-sans);letter-spacing:.06em;text-transform:uppercase;padding:6px 9px;border-radius:999px;background:rgba(0,0,0,.72);color:var(--yellow);border:1px solid rgba(242,183,5,.4)}
 .vid.feat .role{background:var(--yellow);color:#000;border-color:var(--yellow)}
 .vid.feat{border-color:color-mix(in srgb,var(--yellow) 45%,var(--line))}
 
@@ -218,7 +222,7 @@ footer a{color:var(--muted)}
   <div class="wrap" id="top">
     <p class="eyebrow">Management · Strategy · Artificial Intelligence</p>
     <h1>Studying when going against the consensus <em class="serif">pays off.</em></h1>
-    <p class="lead">I build theory and evidence on contrarian strategy: why some firms and founders bet against what everyone else believes, when investors and evaluators reward them, and how AI is changing who does the judging.</p>
+    <p class="lead">I study contrarian strategy, the Theory-Based View, and how AI is reshaping individuals, organizations and society.</p>
     <p class="who"><strong>Louis Yu Luo <span lang="zh-Hans">罗煜</span></strong><br><span class="muted">PhD Candidate in Strategy &amp; Management, Imperial College Business School, London</span></p>
     <div class="btns">
       <a class="btn primary" href="#publications">See publications
@@ -237,6 +241,14 @@ footer a{color:var(--muted)}
     <div class="callout">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3z"/></svg>
       <div><small>Research question</small><b>When does challenging the consensus attract capital, and who decides?</b></div>
+    </div>
+
+    <div class="bio">
+      <p class="eyebrow">Bio</p>
+      <p>Louis Yu Luo is a PhD candidate at Imperial Business School, supervised by Prof. Anu Wadhwa and Prof. Chengwei Liu. After more than a decade in energy, broadcasting and online education, he returned to academia to study organizations, innovation and the future of work.</p>
+      <p>His research focuses on <strong>contrarian strategies</strong> and the <strong>Theory-Based View (TBV)</strong>, and on the impact of <strong>AI</strong> on individuals, organizations and society. He combines quantitative analysis with qualitative insight, drawing on machine learning, causal inference and field experiments.</p>
+      <p>Before his PhD he was an award-winning business correspondent and presenter, with exclusive interviews including Kevin Rudd, Dominic Barton, and Nobel laureates Thomas J. Sargent and Aaron Ciechanover. He has held senior roles in education companies, co-founded ventures including EZPZ Education in Beijing, and lectured in interpreting and translation.</p>
+      <p class="muted">He believes real innovation needs a contrarian perspective and human insight beyond existing data. Open to AI research collaborations; happy to start over a coffee.</p>
     </div>
   </div>
 </section>
@@ -299,7 +311,7 @@ footer a{color:var(--muted)}
     <ol class="pubs">
       <li class="pub">
         <div class="fig" aria-hidden="true">
-          <svg viewBox="0 0 160 120"><g stroke="#7d6a1c" stroke-width="2" stroke-linecap="round"><path d="M20 40h28M30 58h28M18 76h28M40 94h28M60 30h28"/></g><g stroke="#ffd400" stroke-width="2.5" stroke-linecap="round"><path d="M140 64h-34"/><path d="M106 64l7-5M106 64l7 5"/></g></svg>
+          <svg viewBox="0 0 160 120"><g stroke="#7d6a1c" stroke-width="2" stroke-linecap="round"><path d="M20 40h28M30 58h28M18 76h28M40 94h28M60 30h28"/></g><g stroke="#f2b705" stroke-width="2.5" stroke-linecap="round"><path d="M140 64h-34"/><path d="M106 64l7-5M106 64l7 5"/></g></svg>
         </div>
         <div>
           <div class="badges"><span class="badge y">Working paper</span><span class="badge">Theory</span><span class="badge">Strategy</span></div>
@@ -314,7 +326,7 @@ footer a{color:var(--muted)}
       </li>
       <li class="pub">
         <div class="fig" aria-hidden="true">
-          <svg viewBox="0 0 160 120"><circle cx="58" cy="60" r="26" fill="none" stroke="#7d6a1c" stroke-width="2"/><circle cx="102" cy="60" r="26" fill="none" stroke="#ffd400" stroke-width="2"/></svg>
+          <svg viewBox="0 0 160 120"><circle cx="58" cy="60" r="26" fill="none" stroke="#7d6a1c" stroke-width="2"/><circle cx="102" cy="60" r="26" fill="none" stroke="#f2b705" stroke-width="2"/></svg>
         </div>
         <div>
           <div class="badges"><span class="badge y">Working paper</span><span class="badge">Empirical</span><span class="badge">Management</span></div>
@@ -329,7 +341,7 @@ footer a{color:var(--muted)}
       </li>
       <li class="pub">
         <div class="fig" aria-hidden="true">
-          <svg viewBox="0 0 160 120"><g fill="#7d6a1c"><circle cx="40" cy="40" r="3"/><circle cx="60" cy="52" r="3"/><circle cx="48" cy="72" r="3"/><circle cx="72" cy="82" r="3"/><circle cx="84" cy="44" r="3"/></g><circle cx="122" cy="76" r="5" fill="#ffd400"/><path d="M28 98h104" stroke="#2b2713" stroke-width="2"/></svg>
+          <svg viewBox="0 0 160 120"><g fill="#7d6a1c"><circle cx="40" cy="40" r="3"/><circle cx="60" cy="52" r="3"/><circle cx="48" cy="72" r="3"/><circle cx="72" cy="82" r="3"/><circle cx="84" cy="44" r="3"/></g><circle cx="122" cy="76" r="5" fill="#f2b705"/><path d="M28 98h104" stroke="#2b2713" stroke-width="2"/></svg>
         </div>
         <div>
           <div class="badges"><span class="badge y">In progress</span><span class="badge">AI</span><span class="badge">Peer review</span></div>
@@ -557,7 +569,7 @@ footer a{color:var(--muted)}
   function still(){
     ctx.clearRect(0,0,W,H);
     for (const p of P){ ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(p.x+(p.c?-12:12),p.y);
-      ctx.strokeStyle = p.c ? '#ffd400' : 'rgba(150,125,35,.4)'; ctx.lineWidth = p.c?1.8:1.1; ctx.stroke(); }
+      ctx.strokeStyle = p.c ? '#f2b705' : 'rgba(140,100,15,.4)'; ctx.lineWidth = p.c?1.8:1.1; ctx.stroke(); }
   }
   function step(t){
     ctx.fillStyle = 'rgba(0,0,0,.15)'; ctx.fillRect(0,0,W,H);
@@ -569,7 +581,7 @@ footer a{color:var(--muted)}
       if (d2 < 9000) p.y += (dy>0?1:-1)*(9000-d2)/9000*2.2;
       if (p.x > W+12 || p.x < -12 || p.y < -12 || p.y > H+12){ Object.assign(p, spawn(p.c,false)); continue; }
       ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(p.x,p.y);
-      ctx.strokeStyle = p.c ? '#ffd400' : 'rgba(150,125,35,.45)'; ctx.lineWidth = p.c?1.8:1.1; ctx.stroke();
+      ctx.strokeStyle = p.c ? '#f2b705' : 'rgba(140,100,15,.45)'; ctx.lineWidth = p.c?1.8:1.1; ctx.stroke();
     }
     raf = requestAnimationFrame(step);
   }
