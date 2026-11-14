@@ -191,6 +191,29 @@ blockquote p{color:var(--yellow);font-size:19px;line-height:1.5;margin:0}
 #pl-video{display:block;width:100%;aspect-ratio:16/9;background:#000}
 .pl-note{margin:0;padding:12px 18px;font-size:13px;color:var(--muted)}
 
+/* ---------- guestbook ---------- */
+.gb{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:10px}
+@media (max-width:760px){.gb{grid-template-columns:1fr}}
+.gb-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px 24px}
+.gb-card h3{margin:0 0 4px}
+.gb-card .sub{font-size:14px;color:var(--muted);margin:0 0 16px}
+.gb-form{display:grid;gap:12px}
+.gb-form label{display:grid;gap:6px;font:600 11px/1 var(--font-sans);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.gb-form input,.gb-form textarea{font:400 15px/1.5 var(--font-sans);color:var(--yellow-soft);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;letter-spacing:0;text-transform:none}
+.gb-form input:focus,.gb-form textarea:focus{outline:none;border-color:var(--yellow);box-shadow:0 0 0 3px rgba(242,183,5,.15)}
+.gb-form textarea{min-height:130px;resize:vertical}
+.gb-form .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:480px){.gb-form .row2{grid-template-columns:1fr}}
+.gb-form button{justify-self:start;cursor:pointer;font:600 15px/1 var(--font-sans);padding:12px 22px;border-radius:999px;border:1px solid var(--yellow);background:var(--yellow);color:#000}
+.gb-form button:hover{box-shadow:0 0 24px var(--glow)}
+.gb-form button[disabled]{opacity:.6;cursor:wait}
+.gb-hp{position:absolute;left:-9999px}
+.gb-msg{font-size:14px;margin:0;min-height:1.4em}
+.gb-msg.ok{color:var(--yellow)}
+.gb-msg.err{color:#ff8a65}
+.giscus-wrap{min-height:220px}
+.giscus-wrap .gb-note{font-size:14px;color:var(--muted)}
+
 /* ---------- cv ---------- */
 .cvhead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}
 .cvhead h2{margin:0}
@@ -224,6 +247,7 @@ footer a{color:var(--muted)}
       <a href="#media">media</a>
       <a href="#articles">articles</a>
       <a href="#cv">CV</a>
+      <a href="#guestbook">guestbook</a>
     </nav>
   </div>
 </header>
@@ -530,6 +554,37 @@ footer a{color:var(--muted)}
     </div>
   </div>
 </section>
+
+<!-- ================= GUESTBOOK ================= -->
+<section id="guestbook">
+  <div class="wrap">
+    <p class="eyebrow">Guestbook</p>
+    <h2>Leave a message.</h2>
+    <p>Questions about my research, ideas for collaboration, or just a hello. Write privately, or join the public board.</p>
+    <div class="gb">
+      <div class="gb-card">
+        <h3>Private message</h3>
+        <p class="sub">Goes straight to my inbox. No account needed.</p>
+        <form class="gb-form" id="gb-form" novalidate>
+          <div class="row2">
+            <label>Name<input name="name" required autocomplete="name"></label>
+            <label>Email<input name="email" type="email" required autocomplete="email"></label>
+          </div>
+          <label>Affiliation <span style="text-transform:none;letter-spacing:0;font-weight:400">(optional)</span><input name="affiliation" autocomplete="organization"></label>
+          <label>Message<textarea name="message" required></textarea></label>
+          <input class="gb-hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button type="submit">Send message</button>
+          <p class="gb-msg" id="gb-msg" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+      <div class="gb-card">
+        <h3>Public board</h3>
+        <p class="sub">Comments are visible to everyone. Sign in with GitHub to post.</p>
+        <div class="giscus-wrap" id="giscus-wrap"><p class="gb-note">Loading the board…</p></div>
+      </div>
+    </div>
+  </div>
+</section>
 </main>
 
 <dialog id="player" aria-label="Video player">
@@ -629,6 +684,49 @@ footer a{color:var(--muted)}
     links.forEach(l => l.classList.toggle('on', l.getAttribute('href') === '#' + id));
   }), {rootMargin:'-40% 0px -55% 0px'});
   document.querySelectorAll('main section').forEach(s => io.observe(s));
+})();
+</script>
+<script>
+/* guestbook: private form (FormSubmit) + public board (giscus, lazy) */
+(() => {
+  const f = document.getElementById('gb-form'), msg = document.getElementById('gb-msg');
+  f?.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!f.reportValidity()) return;
+    const d = Object.fromEntries(new FormData(f));
+    if (d._honey) return;
+    const btn = f.querySelector('button'); btn.disabled = true; msg.className = 'gb-msg'; msg.textContent = 'Sending…';
+    try {
+      const r = await fetch('https://formsubmit.co/ajax/louis.luo@imperial.ac.uk', {
+        method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ ...d, _subject: 'Website message from ' + d.name, _template: 'table', _replyto: d.email })
+      });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || String(j.success) === 'false') throw new Error(j.message || 'failed');
+      f.reset(); msg.className = 'gb-msg ok'; msg.textContent = 'Thank you, your message has been sent.';
+    } catch (err) {
+      msg.className = 'gb-msg err'; msg.innerHTML = 'Sorry, it did not go through. Please email <a href="mailto:louis.luo@imperial.ac.uk">louis.luo@imperial.ac.uk</a>.';
+    } finally { btn.disabled = false; }
+  });
+
+  const G = { repo: 'louisyuluo/louisyuluo.github.io', repoId: '%%REPO_ID%%', category: 'Announcements', categoryId: '%%CAT_ID%%' };
+  const wrap = document.getElementById('giscus-wrap');
+  function loadGiscus() {
+    if (!wrap || wrap.dataset.loaded) return; wrap.dataset.loaded = 1;
+    if (G.repoId.startsWith('%%')) { wrap.innerHTML = '<p class="gb-note">The public board is being set up.</p>'; return; }
+    wrap.innerHTML = '';
+    const s = document.createElement('script');
+    Object.entries({ src: 'https://giscus.app/client.js', 'data-repo': G.repo, 'data-repo-id': G.repoId, 'data-category': G.category,
+      'data-category-id': G.categoryId, 'data-mapping': 'specific', 'data-term': 'Guestbook', 'data-strict': '1',
+      'data-reactions-enabled': '1', 'data-emit-metadata': '0', 'data-input-position': 'top',
+      'data-theme': location.origin + '/giscus-theme.css', 'data-lang': 'en', 'data-loading': 'lazy', crossorigin: 'anonymous', async: '' })
+      .forEach(([k, v]) => s.setAttribute(k, v));
+    wrap.appendChild(s);
+  }
+  if ('IntersectionObserver' in window && wrap) {
+    const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { loadGiscus(); io.disconnect(); } }, { rootMargin: '400px' });
+    io.observe(wrap);
+  } else loadGiscus();
 })();
 </script>
 </body>
