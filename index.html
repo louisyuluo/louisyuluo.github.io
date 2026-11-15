@@ -88,7 +88,8 @@ p{margin:0 0 16px;max-width:66ch}
 .stage .legend b{font-weight:400;display:inline-flex;align-items:center;gap:6px}
 .stage .legend b::before{content:"";width:7px;height:7px;border-radius:50%;background:#a9b9d8}
 .stage .legend b.c::before{background:var(--yellow)}
-.stage .legend b.p::before{width:10px;height:10px;background:radial-gradient(circle,var(--cyan) 30%,rgba(34,195,238,0) 72%)}
+.stage .legend b.p::before{width:10px;height:10px;background:radial-gradient(circle,#ff3b30 25%,rgba(255,59,48,0) 72%)}
+.stage .legend b.u::before{width:10px;height:10px;background:radial-gradient(circle,#ffc400 30%,rgba(255,196,0,0) 72%)}
 .stage .ctrl{position:absolute;right:12px;top:12px;font:500 12px/1 var(--font-sans);background:var(--surface-2);color:var(--yellow-soft);border:1px solid var(--line);border-radius:999px;padding:7px 12px;cursor:pointer}
 .stage .ctrl:hover{color:var(--yellow);border-color:var(--yellow)}
 
@@ -294,11 +295,11 @@ footer a{color:var(--muted)}
       <a class="btn" href="#connect">Contact</a>
     </div>
 
-    <div class="stage" aria-label="Animation: a swarm of dots moves together as the consensus; a single contrarian dot cuts through it, and after the collision it grows and glows, showing a larger payoff">
+    <div class="stage" aria-label="Animation: a crowd of dots drifts one way as the consensus; one dot inside it breaks out in the opposite direction with a red burst, the crowd and the contrarian fly apart, and the contrarian grows into a bright yellow upside">
       <canvas id="field" aria-hidden="true"></canvas>
       <span class="cap">The market, as I see it.</span>
       <button class="ctrl" id="pause" type="button" aria-pressed="false">Pause motion</button>
-      <div class="legend"><b>consensus</b><b class="c">contrarian</b><b class="p">payoff</b></div>
+      <div class="legend"><b>consensus</b><b class="c">contrarian</b><b class="p">breakout</b><b class="u">upside</b></div>
     </div>
 
     <div class="callout">
@@ -362,7 +363,7 @@ footer a{color:var(--muted)}
     <ol class="fw" aria-label="Dissertation framework">
       <li class="main"><span class="n">1</span><span class="k">Dissertation paper 1</span><h3>What is contrarianism?</h3><p class="q">Conceptual foundation</p><ul><li>Definition and scope</li><li>Measurement against consensus</li><li>Formal theory</li></ul></li>
       <li class="main"><span class="n">2</span><span class="k">Dissertation paper 2</span><h3>Strategy formulation</h3><p class="q">Can foresight training improve strategy generation?</p><ul><li>Five-condition experiment</li><li>Novelty and feasibility</li><li>Reasoning across two phases</li></ul></li>
-      <li class="rel"><span class="n">3</span><span class="k">Related paper</span><h3>Think-aloud processes</h3><p class="q">How do people develop and revise strategic ideas?</p><ul><li>67 participants to date</li><li>Think-aloud evidence</li><li>Generation mechanisms</li></ul></li>
+      <li class="rel"><span class="n">3</span><span class="k">Related paper</span><h3>Think-aloud processes</h3><p class="q">How do people develop and revise strategic ideas?</p><ul><li>About 100 participants</li><li>Think-aloud evidence</li><li>Generation mechanisms</li></ul></li>
       <li class="main"><span class="n">4</span><span class="k">Dissertation paper 3</span><h3>Venture funding</h3><p class="q">When do contrarian strategies attract finance?</p><ul><li>Semiconductor startups</li><li>Consensus and public theory</li><li>Archival funding outcomes</li></ul></li>
       <li class="rel"><span class="n">5</span><span class="k">Related paper</span><h3>Implementation</h3><p class="q">How do contrarian strategies unfold in (politicized) markets?</p><ul><li>Execution choices</li><li>Audience and market response</li><li>Consequences over time</li></ul></li>
     </ol>
@@ -372,7 +373,7 @@ footer a{color:var(--muted)}
     <p class="subh-sm">Projects &amp; initiatives</p>
     <div class="grid2">
       <a class="proj chal" href="/challenge/"><span class="k">Challenge</span><h3>Strategy Formulation Challenge →</h3><p>Introduction, latest updates, results and registration for the challenge.</p></a>
-      <div class="proj"><span class="k">Formulation</span><h3>Thinking against the grain</h3><p>Think-aloud protocols from 80 sessions trace how people arrive at consensus-following or consensus-challenging strategies.</p></div>
+      <div class="proj"><span class="k">Formulation</span><h3>Thinking against the grain</h3><p>Think-aloud protocols from about 100 participants trace how people arrive at consensus-following or consensus-challenging strategies.</p></div>
       <div class="proj"><span class="k">Theory</span><h3>When contrarian strategy attracts capital</h3><p>A minimal formal model of contrarianism, distance and audience-contingent value.</p></div>
       <div class="proj"><span class="k">Evaluation</span><h3>Disagreeing with the market</h3><p>How investor disagreement shapes funding for ventures that contradict market consensus.</p></div>
       <div class="proj"><span class="k">AI</span><h3>LLMs and contrarian strategies</h3><p>Large language models as tools for measuring consensus, and as evaluators of novel ideas, using ICLR peer review on OpenReview.</p></div>
@@ -662,78 +663,95 @@ footer a{color:var(--muted)}
   const ctx = cv.getContext('2d');
   const btn = document.getElementById('pause');
   let reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let paused = reduce, W, H, raf, T = 0, S = [], C = [], R = [], cx, cy, mouse = {x:-1e4,y:-1e4};
-  const BLUE = '#1f5eff', CYAN = '34,195,238', GREY = 'rgba(110,140,190,.55)';
-  function centre(t){ return [W*.5 + Math.sin(t*.00021)*W*.17, H*.52 + Math.sin(t*.00033+1)*H*.14]; }
+  let paused = reduce, W, H, raf, T = 0, last = 0, mouse = {x:-1e4,y:-1e4};
+  let S = [], K = [], R = [], c = null, cx, cy, cvx = 0, dir = 1, phase = 'calm', pt = 0;
+  const GREY = 'rgba(110,140,190,.6)', HOT = ['255,59,48','255,122,0','255,176,0','255,214,10'];
+  const rad = () => Math.min(W,H)*.32;
   function resize(){
     const r = cv.getBoundingClientRect(), d = Math.min(devicePixelRatio||1, 2);
     W = r.width; H = r.height; cv.width = W*d; cv.height = H*d; ctx.setTransform(d,0,0,d,0,0);
-    [cx, cy] = centre(T);
-    const n = Math.round(Math.min(220, Math.max(90, W*H/1500))), rad = Math.min(W,H)*.34;
-    S = Array.from({length:n}, () => { const a = Math.random()*6.283, q = Math.sqrt(Math.random())*rad;
-      const ox = Math.cos(a)*q, oy = Math.sin(a)*q*.72;
-      return {x:cx+ox, y:cy+oy, ox, oy, ph:Math.random()*6.283, vx:0, vy:0}; });
-    C = []; R = []; spawnC(true);
+    cx = W*.5; cy = H*.52; cvx = 0;
+    const n = Math.round(Math.min(220, Math.max(90, W*H/1500))), q0 = rad();
+    S = Array.from({length:n}, () => { const a = Math.random()*6.283, q = Math.sqrt(Math.random())*q0;
+      const ox = Math.cos(a)*q, oy = Math.sin(a)*q*.72; return {x:cx+ox, y:cy+oy, ox, oy, ph:Math.random()*6.283, vx:0, vy:0, hide:false}; });
+    K = []; R = []; c = null; phase = 'calm'; pt = 0;
     if (paused) still();
   }
-  function spawnC(first){
-    const left = cx > W/2, y = H*(.2 + Math.random()*.6);
-    C.push({x: left ? -10 : W+10, y, r:2.6, hit:false, glow:0, life:0, born:T, wait: first ? 0 : 0,
-            vx: (left ? 1 : -1)*(1.5 + Math.random()*.5), vy: 0, val:0});
+  function pick(){ // a dot near the leading edge of the crowd's opposite side becomes the contrarian
+    let best = null, bs = 1e9;
+    for (const p of S){ const s = Math.hypot(p.ox, p.oy) + (p.ox*dir)*.6; if (s < bs){ bs = s; best = p; } }
+    best.hide = true;
+    c = {p:best, x:best.x, y:best.y, vx:0, vy:0, r:2.4, heat:0, val:0, trail:[]};
   }
-  function swarmRadius(){ return Math.min(W,H)*.34; }
+  function burst(){
+    const ang = Math.atan2((Math.random()-.5)*.5, -dir);
+    c.vx = Math.cos(ang)*4.6; c.vy = Math.sin(ang)*4.6; c.heat = 1;
+    R.push({x:c.x, y:c.y, r:3, a:.95, col:HOT[0], w:2.4}, {x:c.x, y:c.y, r:1, a:.7, col:HOT[2], w:1.4});
+    for (let i = 0; i < 46; i++){ // sparks fly both ways: most with the contrarian, some with the crowd
+      const back = i % 3 === 0, a = (back ? (dir>0?0:Math.PI) : (dir>0?Math.PI:0)) + (Math.random()-.5)*1.6, v = 1.5 + Math.random()*3.5;
+      K.push({x:c.x, y:c.y, vx:Math.cos(a)*v, vy:Math.sin(a)*v, life:1, col:HOT[(Math.random()*3)|0], s:1.2+Math.random()*1.6}); }
+    for (const p of S){ if (p.hide) continue; const dx = p.x-c.x, dy = p.y-c.y, d = Math.hypot(dx,dy)+1, f = Math.max(0, 1 - d/(rad()*2.2));
+      p.vx += dir*(1.2 + 2.6*f) + dx/d*2.2*f; p.vy += dy/d*2.2*f; }
+    cvx += dir*2.6;
+  }
   function tick(dt){
-    T += dt; const [tx, ty] = centre(T); const dcx = tx-cx, dcy = ty-cy; cx = tx; cy = ty;
-    const rad = swarmRadius();
+    T += dt; pt += dt;
+    // crowd centre: drifts with the consensus, gets kicked at the breakout, then eases back
+    cvx += (W*.5 - cx)*.00045 + dir*.004; cvx *= .985; cx += cvx;
+    cy = H*.52 + Math.sin(T*.00035)*H*.1;
     for (const p of S){
-      // each dot keeps its place in the crowd (spring to a slot that drifts with the centre), with a little wobble
-      const tx2 = cx + p.ox + Math.sin(T*.0011 + p.ph)*5, ty2 = cy + p.oy + Math.cos(T*.0009 + p.ph)*4;
-      p.vx += (tx2-p.x)*.018 + (Math.random()-.5)*.08;
-      p.vy += (ty2-p.y)*.018 + (Math.random()-.5)*.08;
+      const tx = cx + p.ox + Math.sin(T*.0011 + p.ph)*5, ty = cy + p.oy + Math.cos(T*.0009 + p.ph)*4;
+      p.vx += (tx-p.x)*.016 + (Math.random()-.5)*.08; p.vy += (ty-p.y)*.016 + (Math.random()-.5)*.08;
       const mx = p.x-mouse.x, my = p.y-mouse.y, m2 = mx*mx+my*my;
       if (m2 < 4200){ const f = (4200-m2)/4200*.9, ml = Math.sqrt(m2)+.01; p.vx += mx/ml*f; p.vy += my/ml*f; }
-      for (const c of C){ const ex = p.x-c.x, ey = p.y-c.y, e2 = ex*ex+ey*ey, zone = 700 + c.r*c.r*28;
-        if (e2 < zone){ const f = (zone-e2)/zone*1.6, el = Math.sqrt(e2)+.01; p.vx += ex/el*f; p.vy += ey/el*f; } }
-      p.vx *= .86; p.vy *= .86; p.x += p.vx; p.y += p.vy;
+      p.vx *= .9; p.vy *= .9; p.x += p.vx; p.y += p.vy;
     }
-    for (const c of C){
-      if (!c.hit) c.vy = (cy - c.y)*.012; else { c.vy *= .96; c.vx *= .994; if (Math.abs(c.vx) < .55) c.vx = Math.sign(c.vx)*.55; }
-      c.life += dt; c.x += c.vx; c.y += c.vy + Math.sin(c.life*.004)*.15;
-      const inside = Math.hypot(c.x-cx, (c.y-cy)/.75) < rad*.55;
-      if (inside && !c.hit){ c.hit = true; R.push({x:c.x, y:c.y, r:4, a:.9}); }
-      if (c.hit){ c.r = Math.min(10, c.r + .045); c.glow = Math.min(1, c.glow + .02); c.val = Math.min(1, c.val + .012);
-        if (Math.random() < .035) R.push({x:c.x, y:c.y, r:c.r, a:.35}); }
+    if (phase === 'calm' && pt > 1400){ pick(); phase = 'charge'; pt = 0; }
+    else if (phase === 'charge'){ c.x = c.p.x; c.y = c.p.y; c.r = 2.4 + Math.sin(pt*.02)*.8 + pt*.0012;
+      if (pt > 1300){ burst(); phase = 'fly'; pt = 0; } }
+    else if (phase === 'fly'){
+      c.trail.push([c.x, c.y]); if (c.trail.length > 26) c.trail.shift();
+      c.x += c.vx; c.y += c.vy; c.vx *= .992; c.vy *= .97;
+      if (Math.abs(c.vx) < 1.1) c.vx = Math.sign(c.vx)*1.1;
+      c.r = Math.min(11, c.r + .06); c.val = Math.min(1, c.val + .01); c.heat = Math.max(0, c.heat - .006);
+      if (Math.random() < .25) K.push({x:c.x - c.vx*2, y:c.y + (Math.random()-.5)*c.r, vx:-c.vx*.15 + (Math.random()-.5)*.6, vy:(Math.random()-.5)*.6, life:.8, col:HOT[2 + (Math.random()*2|0)], s:1 + Math.random()});
+      if (c.x < -40 || c.x > W+40){ c.p.hide = false; c.p.x = cx + c.p.ox; c.p.y = cy + c.p.oy; c = null; phase = 'calm'; pt = 0; dir = -dir; }
     }
-    C = C.filter(c => c.x > -30 && c.x < W+30);
-    if (C.length === 0 || (C.length < 2 && C[C.length-1].life > 3200)) spawnC(false);
-    for (const r of R){ r.r += 1.6; r.a *= .965; }
+    for (const k of K){ k.x += k.vx; k.y += k.vy; k.vx *= .97; k.vy *= .97; k.life -= .018; }
+    K = K.filter(k => k.life > 0);
+    for (const r of R){ r.r += 2.2; r.a *= .955; }
     R = R.filter(r => r.a > .03);
   }
   function draw(trail){
-    ctx.fillStyle = trail ? 'rgba(255,255,255,.35)' : '#ffffff'; ctx.fillRect(0,0,W,H);
-    // consensus swarm
+    ctx.fillStyle = trail ? 'rgba(255,255,255,.4)' : '#ffffff'; ctx.fillRect(0,0,W,H);
     ctx.fillStyle = GREY;
-    for (const p of S){ ctx.beginPath(); ctx.arc(p.x, p.y, 1.9, 0, 6.283); ctx.fill(); }
-    // shock rings
-    for (const r of R){ ctx.beginPath(); ctx.arc(r.x, r.y, r.r, 0, 6.283); ctx.strokeStyle = `rgba(${CYAN},${r.a})`; ctx.lineWidth = 1.4; ctx.stroke(); }
-    // contrarians
-    for (const c of C){
-      if (c.glow){ const g = ctx.createRadialGradient(c.x,c.y,0,c.x,c.y,c.r*4.5);
-        g.addColorStop(0, `rgba(${CYAN},${.45*c.glow})`); g.addColorStop(1, `rgba(${CYAN},0)`);
-        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(c.x,c.y,c.r*4.5,0,6.283); ctx.fill(); }
-      ctx.beginPath(); ctx.arc(c.x, c.y, c.r, 0, 6.283); ctx.fillStyle = BLUE; ctx.fill();
-      if (c.val > .05){ ctx.font = '600 12px "Geist Mono", ui-monospace, monospace'; ctx.fillStyle = `rgba(31,94,255,${Math.min(1,c.val*1.4)})`;
-        ctx.fillText('+' + (1 + Math.round(c.val*9)) + '×', c.x + c.r + 6, c.y - c.r - 4); }
-    }
+    for (const p of S){ if (p.hide) continue; ctx.beginPath(); ctx.arc(p.x, p.y, 1.9, 0, 6.283); ctx.fill(); }
+    for (const r of R){ ctx.beginPath(); ctx.arc(r.x, r.y, r.r, 0, 6.283); ctx.strokeStyle = `rgba(${r.col},${r.a})`; ctx.lineWidth = r.w; ctx.stroke(); }
+    for (const k of K){ ctx.beginPath(); ctx.arc(k.x, k.y, k.s, 0, 6.283); ctx.fillStyle = `rgba(${k.col},${Math.max(0,k.life)})`; ctx.fill(); }
+    if (!c) return;
+    if (c.trail.length > 1){ for (let i = 1; i < c.trail.length; i++){ const t = i/c.trail.length, a = c.trail[i-1], b = c.trail[i];
+      ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]); ctx.strokeStyle = `rgba(${t > .6 ? HOT[3] : HOT[1]},${t*.75})`; ctx.lineWidth = 1 + t*c.r*.9; ctx.lineCap = 'round'; ctx.stroke(); } }
+    if (phase === 'charge'){ const a = .25 + .25*Math.sin(pt*.02);
+      ctx.beginPath(); ctx.arc(c.x, c.y, c.r*3, 0, 6.283); ctx.fillStyle = `rgba(${HOT[0]},${a})`; ctx.fill(); }
+    if (phase === 'fly' || phase === 'still'){
+      const g = ctx.createRadialGradient(c.x,c.y,0,c.x,c.y,c.r*4.2);
+      g.addColorStop(0, `rgba(${HOT[3]},.85)`); g.addColorStop(.45, `rgba(${HOT[1]},${.35 + .35*c.heat})`); g.addColorStop(1, `rgba(${HOT[0]},0)`);
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(c.x,c.y,c.r*4.2,0,6.283); ctx.fill(); }
+    ctx.beginPath(); ctx.arc(c.x, c.y, c.r, 0, 6.283); ctx.fillStyle = phase === 'charge' ? '#1f5eff' : '#fff6cc'; ctx.fill();
+    if (phase !== 'charge'){ ctx.lineWidth = 1.5; ctx.strokeStyle = `rgba(${HOT[1]},.9)`; ctx.stroke(); }
+    if (c.val > .05){ ctx.font = '600 13px "Geist Mono", ui-monospace, monospace'; ctx.fillStyle = `rgba(214,120,0,${Math.min(1,c.val*1.5)})`;
+      const lx = c.vx < 0 ? c.x - c.r - 34 : c.x + c.r + 6; ctx.fillText('+' + (1 + Math.round(c.val*9)) + '×', lx, c.y - c.r - 6); }
   }
   function still(){
-    // a composed frame: swarm, one contrarian just through it with its payoff
-    const save = C; const rad = swarmRadius();
-    C = [{x:cx + rad*.75, y:cy - rad*.2, r:8, glow:1, val:.9, hit:true}];
-    R = [{x:cx + rad*.35, y:cy - rad*.1, r:rad*.35, a:.35}, {x:cx + rad*.35, y:cy - rad*.1, r:rad*.6, a:.18}];
-    draw(false); C = save; R = [];
+    const save = {S:S.map(p => ({...p})), K, R, c, phase};
+    for (const p of S){ p.x += rad()*.35; }
+    const q = rad();
+    c = {x:cx - q*1.15, y:cy - q*.15, r:10, heat:.6, val:1, vx:-1, trail:Array.from({length:20}, (_, i) => [cx - q*1.15 + (20-i)*5, cy - q*.15 + (20-i)*.4])};
+    K = Array.from({length:22}, (_, i) => ({x:cx - q*.6 + Math.cos(i)*q*.35, y:cy + Math.sin(i*1.7)*q*.3, life:.7, col:HOT[i%3], s:1.6}));
+    R = [{x:cx - q*.45, y:cy - q*.05, r:q*.55, a:.35, col:HOT[0], w:2}];
+    phase = 'still'; draw(false);
+    S = save.S; K = save.K; R = save.R; c = save.c; phase = save.phase;
   }
-  let last = 0;
   function step(now){
     const dt = Math.min(48, now - (last || now)); last = now;
     tick(dt); draw(true); raf = requestAnimationFrame(step);
