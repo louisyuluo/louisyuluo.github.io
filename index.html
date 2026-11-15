@@ -671,7 +671,8 @@ footer a{color:var(--muted)}
     [cx, cy] = centre(T);
     const n = Math.round(Math.min(170, Math.max(70, W*H/1900))), rad = Math.min(W,H)*.26;
     S = Array.from({length:n}, () => { const a = Math.random()*6.283, q = Math.sqrt(Math.random())*rad;
-      return {x:cx+Math.cos(a)*q, y:cy+Math.sin(a)*q*.75, vx:0, vy:0}; });
+      const ox = Math.cos(a)*q, oy = Math.sin(a)*q*.72;
+      return {x:cx+ox, y:cy+oy, ox, oy, ph:Math.random()*6.283, vx:0, vy:0}; });
     C = []; R = []; spawnC(true);
     if (paused) still();
   }
@@ -685,16 +686,15 @@ footer a{color:var(--muted)}
     T += dt; const [tx, ty] = centre(T); const dcx = tx-cx, dcy = ty-cy; cx = tx; cy = ty;
     const rad = swarmRadius();
     for (const p of S){
-      // cohesion to moving centre, shared drift, gentle swirl and jitter
-      const dx = cx-p.x, dy = (cy-p.y)/.75, dist = Math.hypot(dx,dy)||1;
-      const pull = dist > rad ? .0025 : .0008;
-      p.vx += dx*pull + dcx*.06 - dy/dist*.012 + (Math.random()-.5)*.06;
-      p.vy += dy*pull*.75 + dcy*.06 + dx/dist*.012 + (Math.random()-.5)*.06;
+      // each dot keeps its place in the crowd (spring to a slot that drifts with the centre), with a little wobble
+      const tx2 = cx + p.ox + Math.sin(T*.0011 + p.ph)*5, ty2 = cy + p.oy + Math.cos(T*.0009 + p.ph)*4;
+      p.vx += (tx2-p.x)*.018 + (Math.random()-.5)*.08;
+      p.vy += (ty2-p.y)*.018 + (Math.random()-.5)*.08;
       const mx = p.x-mouse.x, my = p.y-mouse.y, m2 = mx*mx+my*my;
-      if (m2 < 4200){ const f = (4200-m2)/4200*.6; p.vx += mx/Math.sqrt(m2+1)*f; p.vy += my/Math.sqrt(m2+1)*f; }
-      for (const c of C){ const ex = p.x-c.x, ey = p.y-c.y, e2 = ex*ex+ey*ey, zone = 900 + c.r*c.r*30;
-        if (e2 < zone){ const f = (zone-e2)/zone*1.1, el = Math.sqrt(e2)+.01; p.vx += ex/el*f; p.vy += ey/el*f; } }
-      p.vx *= .92; p.vy *= .92; p.x += p.vx; p.y += p.vy;
+      if (m2 < 4200){ const f = (4200-m2)/4200*.9, ml = Math.sqrt(m2)+.01; p.vx += mx/ml*f; p.vy += my/ml*f; }
+      for (const c of C){ const ex = p.x-c.x, ey = p.y-c.y, e2 = ex*ex+ey*ey, zone = 700 + c.r*c.r*28;
+        if (e2 < zone){ const f = (zone-e2)/zone*1.6, el = Math.sqrt(e2)+.01; p.vx += ex/el*f; p.vy += ey/el*f; } }
+      p.vx *= .86; p.vy *= .86; p.x += p.vx; p.y += p.vy;
     }
     for (const c of C){
       c.life += dt; c.x += c.vx; c.y += c.vy + Math.sin(c.life*.004)*.15;
