@@ -685,14 +685,14 @@ footer a{color:var(--muted)}
   }
   function burst(){
     const ang = Math.atan2((Math.random()-.5)*.5, -dir);
-    c.vx = Math.cos(ang)*4.6; c.vy = Math.sin(ang)*4.6; c.heat = 1;
+    c.vx = Math.cos(ang)*3.2; c.vy = Math.sin(ang)*3.2; c.heat = 1;
     R.push({x:c.x, y:c.y, r:3, a:.95, col:HOT[0], w:2.4}, {x:c.x, y:c.y, r:1, a:.7, col:HOT[2], w:1.4});
     for (let i = 0; i < 46; i++){ // sparks fly both ways: most with the contrarian, some with the crowd
       const back = i % 3 === 0, a = (back ? (dir>0?0:Math.PI) : (dir>0?Math.PI:0)) + (Math.random()-.5)*1.6, v = 1.5 + Math.random()*3.5;
       K.push({x:c.x, y:c.y, vx:Math.cos(a)*v, vy:Math.sin(a)*v, life:1, col:HOT[(Math.random()*3)|0], s:1.2+Math.random()*1.6}); }
     for (const p of S){ if (p.hide) continue; const dx = p.x-c.x, dy = p.y-c.y, d = Math.hypot(dx,dy)+1, f = Math.max(0, 1 - d/(rad()*2.2));
       p.vx += dir*(1.2 + 2.6*f) + dx/d*2.2*f; p.vy += dy/d*2.2*f; }
-    cvx += dir*2.6;
+    cvx += dir*3.4;
   }
   function tick(dt){
     T += dt; pt += dt;
@@ -711,15 +711,15 @@ footer a{color:var(--muted)}
       if (pt > 1300){ burst(); phase = 'fly'; pt = 0; } }
     else if (phase === 'fly'){
       c.trail.push([c.x, c.y]); if (c.trail.length > 26) c.trail.shift();
-      c.x += c.vx; c.y += c.vy; c.vx *= .992; c.vy *= .97;
-      if (Math.abs(c.vx) < 1.1) c.vx = Math.sign(c.vx)*1.1;
-      c.r = Math.min(11, c.r + .06); c.val = Math.min(1, c.val + .01); c.heat = Math.max(0, c.heat - .006);
+      c.x += c.vx; c.y += c.vy; c.vx *= .985; c.vy *= .97;
+      if (Math.abs(c.vx) < .7) c.vx = Math.sign(c.vx)*.7;
+      c.r = Math.min(12, c.r + .05); c.val = Math.min(1, c.val + .007); c.heat = Math.max(0, c.heat - .004);
       if (Math.random() < .25) K.push({x:c.x - c.vx*2, y:c.y + (Math.random()-.5)*c.r, vx:-c.vx*.15 + (Math.random()-.5)*.6, vy:(Math.random()-.5)*.6, life:.8, col:HOT[2 + (Math.random()*2|0)], s:1 + Math.random()});
       if (c.x < -40 || c.x > W+40){ c.p.hide = false; c.p.x = cx + c.p.ox; c.p.y = cy + c.p.oy; c = null; phase = 'calm'; pt = 0; dir = -dir; }
     }
-    for (const k of K){ k.x += k.vx; k.y += k.vy; k.vx *= .97; k.vy *= .97; k.life -= .018; }
+    for (const k of K){ k.x += k.vx; k.y += k.vy; k.vx *= .965; k.vy *= .965; k.life -= .011; }
     K = K.filter(k => k.life > 0);
-    for (const r of R){ r.r += 2.2; r.a *= .955; }
+    for (const r of R){ r.r += 1.7; r.a *= .965; }
     R = R.filter(r => r.a > .03);
   }
   function draw(trail){
