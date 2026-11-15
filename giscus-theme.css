@@ -1,28 +1,28 @@
-@import url("https://giscus.app/themes/transparent_dark.css");
+@import url("https://giscus.app/themes/light.css");
 main {
-  --color-fg-default: #cdbb8a;
-  --color-fg-muted: #8f8458;
-  --color-accent-fg: #f2b705;
-  --color-accent-emphasis: #f2b705;
-  --color-border-default: #2e2510;
-  --color-border-muted: #2e2510;
+  --color-fg-default: #33425f;
+  --color-fg-muted: #6c7b96;
+  --color-accent-fg: #1f5eff;
+  --color-accent-emphasis: #1f5eff;
+  --color-border-default: #dce4f1;
+  --color-border-muted: #dce4f1;
   --color-canvas-default: transparent;
-  --color-canvas-subtle: #17130a;
-  --color-canvas-overlay: #0c0a05;
-  --color-btn-text: #cdbb8a;
-  --color-btn-bg: #17130a;
-  --color-btn-border: #2e2510;
-  --color-btn-hover-bg: #221b0c;
-  --color-btn-primary-text: #000000;
-  --color-btn-primary-bg: #f2b705;
-  --color-btn-primary-border: #f2b705;
-  --color-btn-primary-hover-bg: #ffc933;
-  --color-btn-primary-disabled-text: rgba(0,0,0,.5);
-  --color-btn-primary-disabled-bg: rgba(242,183,5,.5);
-  --color-primer-border-active: #f2b705;
-  --color-segmented-control-bg: #17130a;
-  --color-segmented-control-button-selected-border: #2e2510;
-  --color-social-reaction-bg-hover: #221b0c;
-  --color-social-reaction-bg-reacted-hover: #3a2d0c;
+  --color-canvas-subtle: #eef3fc;
+  --color-canvas-overlay: #ffffff;
+  --color-btn-text: #33425f;
+  --color-btn-bg: #eef3fc;
+  --color-btn-border: #dce4f1;
+  --color-btn-hover-bg: #e3ebfa;
+  --color-btn-primary-text: #ffffff;
+  --color-btn-primary-bg: #1f5eff;
+  --color-btn-primary-border: #1f5eff;
+  --color-btn-primary-hover-bg: #3b74ff;
+  --color-btn-primary-disabled-text: rgba(255,255,255,.8);
+  --color-btn-primary-disabled-bg: rgba(31,94,255,.5);
+  --color-primer-border-active: #1f5eff;
+  --color-segmented-control-bg: #eef3fc;
+  --color-segmented-control-button-selected-border: #dce4f1;
+  --color-social-reaction-bg-hover: #e3ebfa;
+  --color-social-reaction-bg-reacted-hover: #d6e2fb;
 }
-main .gsc-comment-box-textarea, main .gsc-comment-box-preview { background: #000; }
+main .gsc-comment-box-textarea, main .gsc-comment-box-preview { background: #ffffff; }
