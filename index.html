@@ -220,10 +220,11 @@ blockquote p{color:var(--yellow);font-size:19px;line-height:1.5;margin:0}
 
 /* ---------- dissertation framework ---------- */
 .wrap.wide{max-width:1120px}
-.fw{list-style:none;margin:28px 0 14px;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;counter-reset:fw}
+.fw{list-style:none;margin:28px 0 14px;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 26px;counter-reset:fw}
+@media (min-width:901px){.fw>li:nth-child(3n)::after{display:none}}
 .fw>li{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 16px 16px;display:flex;flex-direction:column;gap:10px}
 .fw>li.main{border-color:color-mix(in srgb,var(--yellow) 55%,var(--line));background:linear-gradient(180deg,rgba(31,94,255,.07),rgba(31,94,255,0) 55%),var(--surface);box-shadow:0 10px 30px -18px rgba(31,94,255,.55)}
-.fw>li:not(:last-child)::after{content:"";position:absolute;right:-12px;top:50%;width:8px;height:8px;border-top:2px solid var(--muted);border-right:2px solid var(--muted);transform:translateY(-50%) rotate(45deg);opacity:.7}
+.fw>li:not(:last-child)::after{content:"";position:absolute;right:-16px;top:50%;width:8px;height:8px;border-top:2px solid var(--muted);border-right:2px solid var(--muted);transform:translateY(-50%) rotate(45deg);opacity:.7}
 .fw .n{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font:600 14px/1 var(--font-mono);color:#fff;background:#a9b9d8}
 .fw>li.main .n{background:var(--yellow);box-shadow:0 0 0 4px rgba(31,94,255,.12)}
 .fw .k{font:600 10.5px/1.3 var(--font-sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
@@ -356,16 +357,17 @@ footer a{color:var(--muted)}
 <section id="projects">
   <div class="wrap">
     <p class="eyebrow">Projects</p>
-    <h2>One dissertation, five connected papers.</h2>
+    <h2>One dissertation, six connected papers.</h2>
     <p class="muted">What contrarian strategy is, where it comes from, when it attracts capital, and how it plays out.</p>
   </div>
   <div class="wrap wide">
     <ol class="fw" aria-label="Dissertation framework">
       <li class="main"><span class="n">1</span><span class="k">Dissertation paper 1</span><h3>What is contrarianism?</h3><p class="q">Conceptual foundation</p><ul><li>Definition and scope</li><li>Measurement against consensus</li><li>Formal theory</li></ul></li>
       <li class="main"><span class="n">2</span><span class="k">Dissertation paper 2</span><h3>Strategy formulation</h3><p class="q">Can foresight training improve strategy generation?</p><ul><li>Five-condition experiment</li><li>Novelty and feasibility</li><li>Reasoning across two phases</li></ul></li>
-      <li class="rel"><span class="n">3</span><span class="k">Related paper</span><h3>Think-aloud processes</h3><p class="q">How do people develop and revise strategic ideas?</p><ul><li>About 100 participants</li><li>Think-aloud evidence</li><li>Generation mechanisms</li></ul></li>
-      <li class="main"><span class="n">4</span><span class="k">Dissertation paper 3</span><h3>Venture funding</h3><p class="q">When do contrarian strategies attract finance?</p><ul><li>Semiconductor startups</li><li>Consensus and public theory</li><li>Archival funding outcomes</li></ul></li>
-      <li class="rel"><span class="n">5</span><span class="k">Related paper</span><h3>Implementation</h3><p class="q">How do contrarian strategies unfold in (politicized) markets?</p><ul><li>Execution choices</li><li>Audience and market response</li><li>Consequences over time</li></ul></li>
+      <li class="rel"><span class="n">3</span><span class="k">Related paper</span><h3>Strategic foresight tool</h3><p class="q">Can a structured tool help strategists look past the consensus?</p><ul><li>Tool design and prototype</li><li>Builds on foresight training</li><li>Tested in strategy generation</li></ul></li>
+      <li class="rel"><span class="n">4</span><span class="k">Related paper</span><h3>Think-aloud processes</h3><p class="q">How do people develop and revise strategic ideas?</p><ul><li>About 100 participants</li><li>Think-aloud evidence</li><li>Generation mechanisms</li></ul></li>
+      <li class="main"><span class="n">5</span><span class="k">Dissertation paper 3</span><h3>Venture funding</h3><p class="q">When do contrarian strategies attract finance?</p><ul><li>Semiconductor startups</li><li>Consensus and public theory</li><li>Archival funding outcomes</li></ul></li>
+      <li class="rel"><span class="n">6</span><span class="k">Related paper</span><h3>Implementation</h3><p class="q">How do contrarian strategies unfold in (politicized) markets?</p><ul><li>Execution choices</li><li>Audience and market response</li><li>Consequences over time</li></ul></li>
     </ol>
     <div class="fw-sum"><b>Dissertation</b><span>Paper 1: concept</span><span class="plus">+</span><span>Paper 2: formulation experiment</span><span class="plus">+</span><span>Paper 3: venture funding</span><small>Related programme papers: strategic foresight tool, think-aloud processes and implementation.</small></div>
   </div>
