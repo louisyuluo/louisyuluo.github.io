@@ -669,7 +669,7 @@ footer a{color:var(--muted)}
     const r = cv.getBoundingClientRect(), d = Math.min(devicePixelRatio||1, 2);
     W = r.width; H = r.height; cv.width = W*d; cv.height = H*d; ctx.setTransform(d,0,0,d,0,0);
     [cx, cy] = centre(T);
-    const n = Math.round(Math.min(170, Math.max(70, W*H/1900))), rad = Math.min(W,H)*.26;
+    const n = Math.round(Math.min(220, Math.max(90, W*H/1500))), rad = Math.min(W,H)*.34;
     S = Array.from({length:n}, () => { const a = Math.random()*6.283, q = Math.sqrt(Math.random())*rad;
       const ox = Math.cos(a)*q, oy = Math.sin(a)*q*.72;
       return {x:cx+ox, y:cy+oy, ox, oy, ph:Math.random()*6.283, vx:0, vy:0}; });
@@ -681,7 +681,7 @@ footer a{color:var(--muted)}
     C.push({x: left ? -10 : W+10, y, r:2.6, hit:false, glow:0, life:0, born:T, wait: first ? 0 : 0,
             vx: (left ? 1 : -1)*(1.5 + Math.random()*.5), vy: 0, val:0});
   }
-  function swarmRadius(){ return Math.min(W,H)*.26; }
+  function swarmRadius(){ return Math.min(W,H)*.34; }
   function tick(dt){
     T += dt; const [tx, ty] = centre(T); const dcx = tx-cx, dcy = ty-cy; cx = tx; cy = ty;
     const rad = swarmRadius();
@@ -697,6 +697,7 @@ footer a{color:var(--muted)}
       p.vx *= .86; p.vy *= .86; p.x += p.vx; p.y += p.vy;
     }
     for (const c of C){
+      if (!c.hit) c.vy = (cy - c.y)*.012; else { c.vy *= .96; c.vx *= .994; if (Math.abs(c.vx) < .55) c.vx = Math.sign(c.vx)*.55; }
       c.life += dt; c.x += c.vx; c.y += c.vy + Math.sin(c.life*.004)*.15;
       const inside = Math.hypot(c.x-cx, (c.y-cy)/.75) < rad*.55;
       if (inside && !c.hit){ c.hit = true; R.push({x:c.x, y:c.y, r:4, a:.9}); }
